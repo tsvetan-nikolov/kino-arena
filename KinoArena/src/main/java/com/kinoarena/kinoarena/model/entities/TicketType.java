@@ -6,13 +6,13 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "projection_types")
-public class ProjectionType {
+@Table(name = "ticket_types")
+public class TicketType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
     private String type;
     @Column
-    private double additionalPrice;
+    private double additionalCost;
 }
