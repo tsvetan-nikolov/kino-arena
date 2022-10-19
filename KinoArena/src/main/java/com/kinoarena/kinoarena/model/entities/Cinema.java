@@ -3,6 +3,7 @@ package com.kinoarena.kinoarena.model.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,6 +16,9 @@ public class Cinema {
     private String name;
     @Column
     private String address;
-//    @Column
-//    private City city;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+    @OneToMany
+    private List<Hall> halls;
 }

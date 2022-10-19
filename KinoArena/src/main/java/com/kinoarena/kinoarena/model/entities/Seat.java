@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Generated;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,6 +20,9 @@ public class Seat {
     private int row;
     @Column
     private boolean isTaken;
-//    @Column
-//    private Projection projection;
+    @ManyToOne
+    @JoinColumn(name = "projection_id")
+    private Projection projection;
+    @OneToMany(mappedBy = "seat")
+    private List<Ticket> tickets;
 }

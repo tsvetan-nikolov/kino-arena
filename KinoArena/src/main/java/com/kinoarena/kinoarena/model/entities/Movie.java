@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,8 +18,6 @@ public class Movie {
     @Column
     private boolean isDubbed;
     @Column
-    private String ageRestriction;
-    @Column
     private String description;
     @Column
     private LocalDate premiere;
@@ -28,4 +27,9 @@ public class Movie {
     private String actors;
     @Column
     private String director;
+    @ManyToOne
+    @JoinColumn(name = "age_restriction_id")
+    private AgeRestriction ageRestriction;
+    @OneToMany(mappedBy = "movie")
+    private List<Projection> projections;
 }

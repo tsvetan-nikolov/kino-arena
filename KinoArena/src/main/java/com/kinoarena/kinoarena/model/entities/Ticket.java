@@ -11,12 +11,16 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column
-//    private TicketType ticketType;
-//    @Column
-//    private Projection projection;
-//    @Column
-//    private User user;
-//    @Column
-//    private Seat seat;
+    @ManyToOne
+    @JoinColumn(name = "ticket_type_id")
+    private TicketType ticketType;
+    @ManyToOne
+    @JoinColumn(name = "projection_id")
+    private Projection projection;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 }

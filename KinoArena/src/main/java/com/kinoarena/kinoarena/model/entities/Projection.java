@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,12 +19,19 @@ public class Projection {
     private LocalTime start_time;
     @Column
     private LocalDate date;
-//    @Column
-//    private ProjectionType projectionType;
-//    @Column
-//    private Movie movie;
-//    @Column
-//    private Hall hall;
+    @ManyToOne
+    @JoinColumn(name = "projection_type_id")
+    private ProjectionType projectionType;
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+    @ManyToOne
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
+    @OneToMany(mappedBy = "projection")
+    private List<Seat> seats;
+    @OneToMany(mappedBy = "projection")
+    private List<Ticket> tickets;
     @Column
     private double basePrice;
 }

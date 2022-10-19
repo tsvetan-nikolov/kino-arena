@@ -3,6 +3,7 @@ package com.kinoarena.kinoarena.model.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,4 +16,6 @@ public class ProjectionType {
     private String type;
     @Column
     private double additionalPrice;
+    @OneToMany(mappedBy = "projectionType")
+    private List<Projection> projections;
 }

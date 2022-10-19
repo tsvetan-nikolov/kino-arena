@@ -7,15 +7,13 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "ticket_types")
-public class TicketType {
+@Table(name = "age_restrictions")
+public class AgeRestriction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private String type;
-    @Column
-    private double additionalCost;
-    @OneToMany(mappedBy = "ticketType")
-    private List<Ticket> tickets;
+    private String category;
+    @OneToMany(mappedBy = "ageRestriction")
+    private List<Movie> movies;
 }
