@@ -1,15 +1,25 @@
 package com.kinoarena.kinoarena.model.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,4 +46,42 @@ public class User {
     private boolean isAdmin;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String role = isAdmin ? "Admin" : "User";
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    @Transient
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+        //TODO maybe
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+        //TODO maybe
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+        //TODO maybe
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+        //TODO maybe
+    }
+
 }
