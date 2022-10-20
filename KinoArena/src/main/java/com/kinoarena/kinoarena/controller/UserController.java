@@ -1,28 +1,68 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.model.dto.user.request.RegisterRequestDTO;
-import com.kinoarena.kinoarena.model.dto.user.response.UserInfoResponse;
-import com.kinoarena.kinoarena.service.UserService;
-import lombok.RequiredArgsConstructor;
+import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
+import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
-public class UserController {
+public class UserController extends AbstractController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    @PostMapping
+    //just for testing
+//    @PostMapping(value = "/users")
+//    public UserWithoutPasswordDTO addUser(@RequestBody AddUserDTO u) {
+//        System.out.println(u.getCity());
+//        System.out.println(u.getDateOfBirth());
+//        return userService.addUser(u);
+//    }
+
+    @PostMapping(value = "register")
     public UserInfoResponse register(@RequestBody @Valid @NotNull RegisterRequestDTO user) {
         return userService.register(user);
     }
 
+    @PostMapping(value = "/auth")
+    public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpSession session, HttpServletRequest request) {
+
+        UserWithoutPasswordDTO result = userService.login(dto);
+
+        if(result != null) {
+            session.setAttribute("LOGGED", true);
+            session.setAttribute("USER_ID", result.getId());
+            //TODO check with krasi
+            session.setAttribute("REMOTE_IP", request.getRemoteAddr());
+            session.setAttribute("ADMIN", result.isAdmin());
+
+            System.out.println(session.getAttribute("USER_ID"));
+            return result;
+        } else {
+            throw new BadRequestException("Wrong Credentials!");
+        }
+    }
+
+    @PutMapping(value = "/users/{uid}")
+    public UserWithoutPasswordDTO changePassword(@RequestBody ChangePasswordDTO dto, @PathVariable int uid) {
+        return userService.changePassword(uid, dto);
+    }
+
+    @PutMapping(value = "users/{uid}/edit")
+    public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO dto, @PathVariable int uid) {
+        return userService.editProfile(dto, uid);
+    }
+
 }
+

@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -83,5 +82,6 @@ public class User implements UserDetails {
         return false;
         //TODO maybe
     }
+    //todo add gender table to db and user class
 
 }

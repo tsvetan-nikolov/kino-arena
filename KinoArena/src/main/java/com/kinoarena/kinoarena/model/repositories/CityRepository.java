@@ -1,14 +1,13 @@
 package com.kinoarena.kinoarena.model.repositories;
 
-import com.kinoarena.kinoarena.model.entities.User;
+import com.kinoarena.kinoarena.model.entities.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-
-    Optional<User> findByEmail(String email);
-
+public interface CityRepository extends JpaRepository<City, Integer> {
+    City findCitiesById(int id);
+    Optional<City> findCityByName(String name);
 }

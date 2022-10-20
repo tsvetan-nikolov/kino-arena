@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.model.DTOs.user;
+package com.kinoarena.kinoarena.model.DTOs.user.response;
 import lombok.Data;
 
 import java.time.LocalDate;
