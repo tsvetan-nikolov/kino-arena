@@ -1,0 +1,36 @@
+### show movies
+
+GET localhost:8080/users/1/favourite-movies
+
+### user login
+
+POST http://localhost:8080/auth
+Content-Type: application/json
+
+{
+  "email" : "steph@gmail.com",
+  "password" : "Stephanie"
+}
+
+### change password
+
+PUT http://localhost:8080/users/5
+Content-Type: application/json
+
+{
+  "old_password" : "Stephanie",
+  "new_password" : "Polina09",
+  "confirm_password" : "Polina09"
+}
+
+### edit profile
+
+PUT http://localhost:8080/users/5/edit
+Content-Type: application/json
+
+{
+  "first_name": "Stefani",
+  "phone_number" : "0852059644",
+  "address" : "Malta",
+  "city" : "Valetta"
+}

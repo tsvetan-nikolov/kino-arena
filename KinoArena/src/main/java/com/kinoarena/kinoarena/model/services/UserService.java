@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.model.services;
 
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
@@ -17,6 +18,7 @@ import com.kinoarena.kinoarena.model.repositories.CityRepository;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
 import com.kinoarena.kinoarena.model.repositories.UserRepository;
 import com.kinoarena.kinoarena.util.Validator;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,8 +26,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     @Autowired
@@ -168,16 +172,28 @@ public class UserService {
         }
     }
 
+
     public MovieInfoDTO addFavouriteMovie(int movieId, HttpSession s) {
-        MovieInfoDTO movieInfoDTO = movieRepository.findById(movieId)
+        Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new NotFoundException("Movie doesn't exist"));
+        //TODO ENDLESS RECURSION <<<<<<<<<<=============================================================================
 
 
         User u = userRepository.findById((int) s.getAttribute("USER_ID" /*constant*/))
                 .orElseThrow(() -> new NotFoundException("Can't add movie to favourites"));
-//        u.getFavouriteMovies().add(movie); doesn't compile, fix in the morning; need sleep
+        u.getFavouriteMovies().add(movie);
         userRepository.save(u);
 
-        return movieInfoDTO;
+        return modelMapper.map(movie, MovieInfoDTO.class);
+    }
+
+    public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
+        User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
+        UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
+        dto.setFavouriteMovies(user.getFavouriteMovies()
+                .stream()
+                .map(m -> modelMapper.map(m, MovieWithoutUsersDTO.class))
+                .collect(Collectors.toList()));
+        return dto;
     }
 }
