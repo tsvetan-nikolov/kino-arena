@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Setter
 @Getter
@@ -45,6 +45,11 @@ public class User implements UserDetails {
     private boolean isAdmin;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
+    @ManyToMany
+    @JoinTable(name = "users_favourite_movies",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    private List<Movie> favouriteMovies;
 
     @Override
     @Transient
@@ -65,6 +70,7 @@ public class User implements UserDetails {
         return true;
         //TODO maybe
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return false;

@@ -1,11 +1,13 @@
 package com.kinoarena.kinoarena.controller;
 
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
+import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +37,16 @@ public class UserController extends AbstractController {
         return userService.register(user);
     }
 
+    @PostMapping(value = "/users/add_fav_movie/{movieId}")
+    public MovieInfoDTO addFavouriteMovie(@PathVariable int movieId, HttpSession s) {
+        return userService.addFavouriteMovie(movieId, s);
+    }
+
     @PostMapping(value = "/auth")
     public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpSession session, HttpServletRequest request) {
-
         UserWithoutPasswordDTO result = userService.login(dto);
 
-        if(result != null) {
+        if (result != null) {
             session.setAttribute("LOGGED", true);
             session.setAttribute("USER_ID", result.getId());
             //TODO check with krasi

@@ -37,9 +37,7 @@ public class RegisterRequestDTO {
     @NotEmpty
     private LocalDate dateOfBirth;
 
-//    @NotEmpty
-//    @ManyToOne
-//    private City city;
+    private String cityName;
 
 //    private Cinema cinema;
 }

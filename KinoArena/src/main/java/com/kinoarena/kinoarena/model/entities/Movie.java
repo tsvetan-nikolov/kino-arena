@@ -32,4 +32,6 @@ public class Movie {
     private AgeRestriction ageRestriction;
     @OneToMany(mappedBy = "movie")
     private List<Projection> projections;
+    @ManyToMany(mappedBy = "favouriteMovies")
+    private List<User> users;
 }
