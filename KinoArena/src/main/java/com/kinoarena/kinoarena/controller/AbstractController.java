@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
@@ -8,9 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
 public abstract class AbstractController {
+
+    public static final String LOGGED = "LOGGED";
+    public static final String USER_ID = "USER_ID";
+    public static final String IS_ADMIN = "IS_ADMIN";
+    public static final String REMOTE_IP = "REMOTE_IP";
 
     @ExceptionHandler(value = BadRequestException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
@@ -44,4 +52,13 @@ public abstract class AbstractController {
         dto.setTime(LocalDateTime.now());
         return dto;
     }
+
+    public void logUser(UserWithoutPasswordDTO dto, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute(LOGGED, true);
+        session.setAttribute(USER_ID, dto.getId());
+        session.setAttribute(IS_ADMIN, dto.isAdmin());
+        session.setAttribute(REMOTE_IP, request.getRemoteAddr());
+    }
+
 }

@@ -1,10 +1,6 @@
 package com.kinoarena.kinoarena.util;
 
 public class Validator {
-    private static final String PASSWORD_PATTERN = "\\A(?=\\S*[0-9])(?=\\S*[a-z])(?=\\S*[A-Z])\\S{8,}\\z";
-    private static final String PASSWORD_LOWERCASE = ".*[a-z].*";
-    private static final String PASSWORD_UPPERCASE = ".*[A-Z].*";
-    private static final String PASSWORD_DIGITS = ".*[0-9].*";
 
     public static boolean validatePassword(String password) {
         if(password == "" || password == null) {
@@ -12,7 +8,7 @@ public class Validator {
             return false;
         }
 
-        if(password.matches(PASSWORD_PATTERN)) {
+        if(password.matches(Constants.PASSWORD_PATTERN)) {
             return true;
         }
 
@@ -28,19 +24,19 @@ public class Validator {
     }
 
     private static void containsDigits(String password) {
-        if(!password.matches(PASSWORD_DIGITS)) {
+        if(!password.matches(Constants.PASSWORD_DIGITS)) {
             System.out.println("Password has no digits");
         }
     }
 
     private static void containsUppercase(String password) {
-        if(!password.matches(PASSWORD_UPPERCASE)) {
+        if(!password.matches(Constants.PASSWORD_UPPERCASE)) {
             System.out.println("Password has no uppercase letters");
         }
     }
 
     private static void containsLowercase(String password) {
-        if(!password.matches(PASSWORD_LOWERCASE)) {
+        if(!password.matches(Constants.PASSWORD_LOWERCASE)) {
             System.out.println("Password has no lowercase letters");
         }
     }

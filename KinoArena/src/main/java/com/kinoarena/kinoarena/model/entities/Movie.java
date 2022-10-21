@@ -1,5 +1,6 @@
 package com.kinoarena.kinoarena.model.entities;
 
+import com.kinoarena.kinoarena.model.DTOs.user.UserWithoutMoviesDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,4 +33,11 @@ public class Movie {
     private AgeRestriction ageRestriction;
     @OneToMany(mappedBy = "movie")
     private List<Projection> projections;
+    @ManyToMany(mappedBy = "favouriteMovies")
+    private List<User> users;
+    @ManyToMany
+    @JoinTable(name = "movies_genres",
+                joinColumns = @JoinColumn(name = "movie_id"),
+                inverseJoinColumns = @JoinColumn(name = "movie_genre_id"))
+    private List<Genre> movieGenres;
 }

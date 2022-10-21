@@ -1,7 +1,10 @@
 package com.kinoarena.kinoarena.model.DTOs.user.response;
+import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
+import com.kinoarena.kinoarena.model.entities.Movie;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class UserWithoutPasswordDTO {
@@ -13,4 +16,5 @@ public class UserWithoutPasswordDTO {
     private LocalDate dateOfBirth;
     private String address;
     private boolean isAdmin;
+    private List<MovieWithoutUsersDTO> favouriteMovies;
 }

@@ -36,18 +36,12 @@ public class UserController extends AbstractController {
     }
 
     @PostMapping(value = "/auth")
-    public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpSession session, HttpServletRequest request) {
+    public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpServletRequest request) {
 
         UserWithoutPasswordDTO result = userService.login(dto);
 
         if(result != null) {
-            session.setAttribute("LOGGED", true);
-            session.setAttribute("USER_ID", result.getId());
-            //TODO check with krasi
-            session.setAttribute("REMOTE_IP", request.getRemoteAddr());
-            session.setAttribute("ADMIN", result.isAdmin());
-
-            System.out.println(session.getAttribute("USER_ID"));
+            logUser(result, request);
             return result;
         } else {
             throw new BadRequestException("Wrong Credentials!");
@@ -64,5 +58,9 @@ public class UserController extends AbstractController {
         return userService.editProfile(dto, uid);
     }
 
+    @GetMapping(value = "users/{uid}/favourite-movies")
+    public UserWithoutPasswordDTO showFavoriteMovies(@PathVariable int uid) {
+        return userService.showFavouriteMovies(uid);
+    }
 }
 

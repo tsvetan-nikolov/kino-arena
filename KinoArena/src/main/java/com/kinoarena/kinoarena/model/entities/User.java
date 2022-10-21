@@ -1,5 +1,6 @@
 package com.kinoarena.kinoarena.model.entities;
 
+import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,6 +46,11 @@ public class User implements UserDetails {
     private boolean isAdmin;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
+    @ManyToMany
+    @JoinTable(name = "users_favourite_movies",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    private List<Movie> favouriteMovies;
 
     @Override
     @Transient

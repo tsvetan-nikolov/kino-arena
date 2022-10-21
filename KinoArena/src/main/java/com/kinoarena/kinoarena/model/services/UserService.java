@@ -1,5 +1,7 @@
 package com.kinoarena.kinoarena.model.services;
 
+import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.UserWithoutMoviesDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -155,5 +158,14 @@ public class UserService {
             }
             //todo if city is not in db add it
         }
+    }
+
+    public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
+        User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
+        UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
+        dto.setFavouriteMovies(user.getFavouriteMovies().stream()
+                .map(m -> modelMapper.map(m, MovieWithoutUsersDTO.class))
+                .collect(Collectors.toList()));
+        return dto;
     }
 }
