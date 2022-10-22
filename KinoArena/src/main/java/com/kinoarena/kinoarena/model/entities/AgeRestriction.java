@@ -14,6 +14,5 @@ public class AgeRestriction {
     private int id;
     @Column
     private String category;
-    @OneToMany(mappedBy = "ageRestriction")
-    private List<Movie> movies;
+
 }

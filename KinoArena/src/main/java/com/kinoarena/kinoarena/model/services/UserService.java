@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.model.services;
 
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public UserInfoResponse register(RegisterRequestDTO user) {
-        validateRegisterInformation(user); //TODO finish with validator.validatePass();
+        validateRegisterInformation(user);
 
         User createUserToRegister = createUserToRegister(user);
         return modelMapper.map(createUserToRegister, UserInfoResponse.class);
@@ -172,19 +173,31 @@ public class UserService {
         }
     }
 
-
-    public MovieInfoDTO addFavouriteMovie(int movieId, HttpSession s) {
+    @Transactional
+    public MovieResponseDTO addRemoveFavouriteMovie(int movieId, HttpSession s) {
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new NotFoundException("Movie doesn't exist"));
-        //TODO ENDLESS RECURSION <<<<<<<<<<=============================================================================
 
 
-        User u = userRepository.findById((int) s.getAttribute("USER_ID" /*constant*/))
+        User u = userRepository.findById((int) s.getAttribute("USER_ID" /*TODO constants*/))
                 .orElseThrow(() -> new NotFoundException("Can't add movie to favourites"));
-        u.getFavouriteMovies().add(movie);
-        userRepository.save(u);
 
-        return modelMapper.map(movie, MovieInfoDTO.class);
+
+        boolean movieAlreadyInFavourites = u.getFavouriteMovies().contains(movie) || movie.getUsers().contains(u);
+        MovieResponseDTO movieResponse = new MovieResponseDTO();
+        if (movieAlreadyInFavourites) {
+            u.getFavouriteMovies().remove(movie);
+            movie.getUsers().remove(u);
+            movieResponse.setRemoved(true);
+            movieResponse.setMessage("Movie removed from favourites");
+        } else {
+            u.getFavouriteMovies().add(movie);
+            movie.getUsers().add(u);
+            movieResponse.setRemoved(false);
+            movieResponse.setMessage("Movie added to favourites");
+        }
+
+        return movieResponse;
     }
 
     public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
