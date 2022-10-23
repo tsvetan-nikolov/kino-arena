@@ -29,6 +29,8 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.kinoarena.kinoarena.controller.AbstractController.LOGGED;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -175,6 +177,8 @@ public class UserService {
 
     @Transactional
     public MovieResponseDTO addRemoveFavouriteMovie(int movieId, HttpSession s) {
+        checkIfLoggedIn(s);
+
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new NotFoundException("Movie doesn't exist"));
 
@@ -198,6 +202,16 @@ public class UserService {
         }
 
         return movieResponse;
+    }
+
+    private static void checkIfLoggedIn(HttpSession s) {
+        if (s.getAttribute(LOGGED) != null) {
+            if (!(boolean) s.getAttribute(LOGGED)) {
+                throw new BadRequestException("You must first log in!");
+            }
+        } else {
+            throw new BadRequestException("You must first log in!");
+        }
     }
 
     public UserWithoutPasswordDTO showFavouriteMovies(int uid) {

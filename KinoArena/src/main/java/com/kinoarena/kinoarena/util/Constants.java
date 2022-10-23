@@ -10,4 +10,7 @@ public class Constants {
 
     public static final String PASSWORD_DIGITS = ".*[0-9].*";
 
+    public static final String ROLE_ADMIN = "Admin";
+
+    public static final String ROLE_USER = "USER";
 }

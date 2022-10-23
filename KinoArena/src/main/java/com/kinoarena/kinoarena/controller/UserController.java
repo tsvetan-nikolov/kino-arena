@@ -85,5 +85,7 @@ public class UserController extends AbstractController {
     public UserWithoutPasswordDTO showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }
+
+
 }
 
