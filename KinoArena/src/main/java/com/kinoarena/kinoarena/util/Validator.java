@@ -1,8 +1,11 @@
 package com.kinoarena.kinoarena.util;
 
+import com.kinoarena.kinoarena.constant.AuthConstants;
 import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 
-import static com.kinoarena.kinoarena.util.Constants.*;
+import java.time.LocalDate;
+
+import static com.kinoarena.kinoarena.constant.AuthConstants.UserAuthenticationConstants.*;
 
 public class Validator {
 
@@ -14,7 +17,7 @@ public class Validator {
             throw new UnauthorizedException("Password should be at least 8 characters");
         }
 
-        if (password.matches(Constants.PASSWORD_PATTERN)) {
+        if (password.matches(AuthConstants.UserAuthenticationConstants.PASSWORD_PATTERN)) {
             return true;
         }
 
@@ -29,17 +32,11 @@ public class Validator {
         if (!password.matches(PASSWORD_DIGITS)) {
             throw new UnauthorizedException("Password has no digits");
         }
-        if (!password.matches(Constants.PASSWORD_DIGITS)) {
-            System.out.println("Password has no digits");
-        }
     }
 
     private static void containsUppercase(String password) {
         if (!password.matches(PASSWORD_UPPERCASE)) {
             throw new UnauthorizedException("Password has no uppercase letters");
-        }
-        if (!password.matches(Constants.PASSWORD_UPPERCASE)) {
-            System.out.println("Password has no uppercase letters");
         }
     }
 
@@ -47,10 +44,22 @@ public class Validator {
         if (!password.matches(PASSWORD_LOWERCASE)) {
             throw new UnauthorizedException("Password has no lowercase letters");
         }
-        if (!password.matches(Constants.PASSWORD_LOWERCASE)) {
-            System.out.println("Password has no lowercase letters");
-        }
     }
 
+    public static boolean validatePhoneNumber(String phoneNumber) {
+        if(!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean dateIsValid(LocalDate dateOfBirth) {
+        if(dateOfBirth.isAfter(LocalDate.now())) {
+            return false;
+        }
+
+        return true;
+    }
 }
 

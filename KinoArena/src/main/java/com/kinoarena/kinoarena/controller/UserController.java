@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.annotation.UserId;
+import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
@@ -9,6 +10,7 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,13 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController extends AbstractController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     //just for testing
 //    @PostMapping(value = "/users")
@@ -84,7 +87,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "users/{uid}/favourite-movies")
-    public UserWithoutPasswordDTO showFavoriteMovies(@PathVariable int uid) {
+    public List<FavouriteMovieDTO> showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }
 

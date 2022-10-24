@@ -3,8 +3,8 @@ package com.kinoarena.kinoarena.services;
 import com.kinoarena.kinoarena.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
@@ -22,7 +22,6 @@ import com.kinoarena.kinoarena.model.repositories.UserRepository;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,19 +43,12 @@ import static com.kinoarena.kinoarena.constant.AuthConstants.Role.ROLE_USER;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private MovieRepository movieRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CityRepository cityRepository;
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
+    private final CityRepository cityRepository;
+    private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     public UserInfoResponse register(RegisterRequestDTO user) {
         validateRegisterInformation(user);
@@ -91,24 +83,24 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public UserWithoutPasswordDTO login(LoginDTO dto) {
-        String email = dto.getEmail();
-        String password = dto.getPassword();
-
-        Optional<User> user = userRepository.findByEmail(email);
-
-        if (user.isPresent()) {
-            User u = user.get();
-
-            if (passwordEncoder.matches(password, u.getPassword())) {
-                return modelMapper.map(u, UserWithoutPasswordDTO.class);
-            } else {
-                throw new UnauthorizedException("Wrong Credentials!");
-            }
-        } else {
-            throw new UnauthorizedException("Wrong Credentials!");
-        }
-    }
+//    public UserWithoutPasswordDTO login(LoginDTO dto) {
+//        String email = dto.getEmail();
+//        String password = dto.getPassword();
+//
+//        Optional<User> user = userRepository.findByEmail(email);
+//
+//        if (user.isPresent()) {
+//            User u = user.get();
+//
+//            if (passwordEncoder.matches(password, u.getPassword())) {
+//                return modelMapper.map(u, UserWithoutPasswordDTO.class);
+//            } else {
+//                throw new UnauthorizedException("Wrong Credentials!");
+//            }
+//        } else {
+//            throw new UnauthorizedException("Wrong Credentials!");
+//        }
+//    }
 
     public UserWithoutPasswordDTO changePassword(int uid, ChangePasswordDTO dto) {
         String oldPassword = dto.getOldPassword();
@@ -157,34 +149,49 @@ public class UserService implements UserDetailsService {
     }
 
     private void setNewValues(EditProfileDTO dto, User u) {
-        if (!dto.getFirstName().isEmpty()) {
+        if (!dto.getFirstName().equals(u.getFirstName())) {
             u.setFirstName(dto.getFirstName());
         }
-        if (dto.getMiddleName() != null) {
+
+        if (!dto.getMiddleName().equals(u.getMiddleName())) {
             u.setMiddleName(dto.getMiddleName());
         }
-        if (dto.getLastName() != null) {
+
+        if (!dto.getLastName().equals(u.getLastName())) {
             u.setLastName(dto.getLastName());
         }
-        //todo validate phone number
-        if (dto.getPhoneNumber() != null) {
-            u.setPhoneNumber(dto.getPhoneNumber());
+
+        if (!dto.getPhoneNumber().equals(u.getPhoneNumber())) {
+            if (Validator.validatePhoneNumber(dto.getPhoneNumber())) {
+                u.setPhoneNumber(dto.getPhoneNumber());
+            } else {
+                throw new BadRequestException("Invalid phone number!");
+            }
         }
-        //todo validate DoB
-        if (dto.getDateOfBirth() != null) {
-            u.setDateOfBirth(dto.getDateOfBirth());
+
+        if (!dto.getDateOfBirth().equals(u.getDateOfBirth())) {
+            if (Validator.dateIsValid(dto.getDateOfBirth())) {
+                u.setDateOfBirth(dto.getDateOfBirth());
+            } else {
+                throw new BadRequestException("Invalid date of birth!");
+            }
         }
-        if (dto.getAddress() != null) {
+
+        if (!dto.getAddress().equals(u.getAddress())) {
             u.setAddress(dto.getAddress());
         }
-        if (dto.getCity() != null) {
-            Optional<City> city = cityRepository.findFirstByName(dto.getCity());
 
+        if (!dto.getCity().equals(u.getCity().getName())) {
+            Optional<City> city = cityRepository.findFirstByName(dto.getCity());
+            City c = new City();
             if (city.isPresent()) {
-                City c = city.get();
-                u.setCity(c);
+                c = city.get();
+            } else {
+                c.setName(dto.getCity());
+                cityRepository.save(c);
             }
-            //todo if city is not in db add it
+
+            u.setCity(c);
         }
     }
 
@@ -227,14 +234,15 @@ public class UserService implements UserDetailsService {
 //        }
 //    }
 
-    public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
+
+    public List<FavouriteMovieDTO> showFavouriteMovies(int uid) {
         User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
         UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
         dto.setFavouriteMovies(user.getFavouriteMovies()
                 .stream()
-                .map(m -> modelMapper.map(m, MovieWithoutUsersDTO.class))
+                .map(m -> modelMapper.map(m, FavouriteMovieDTO.class))
                 .collect(Collectors.toList()));
-        return dto;
+        return dto.getFavouriteMovies();
     }
 
     @Override

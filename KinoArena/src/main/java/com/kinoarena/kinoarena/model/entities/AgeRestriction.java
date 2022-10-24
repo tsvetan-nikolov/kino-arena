@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +18,6 @@ public class AgeRestriction {
     @Column
     private String category;
 
+//    @OneToMany(mappedBy = "ageRestriction")
+//    private List<Movie> movies;
 }

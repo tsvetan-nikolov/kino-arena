@@ -18,7 +18,7 @@ public class AuthConstants {
 
     }
 
-    public static class Password {
+    public static class UserAuthenticationConstants {
         public static final String PASSWORD_PATTERN = "\\A(?=\\S*[0-9])(?=\\S*[a-z])(?=\\S*[A-Z])\\S{8,}\\z";
 
         public static final String PASSWORD_LOWERCASE = ".*[a-z].*";
@@ -26,6 +26,8 @@ public class AuthConstants {
         public static final String PASSWORD_UPPERCASE = ".*[A-Z].*";
 
         public static final String PASSWORD_DIGITS = ".*[0-9].*";
+
+        public static final String PHONE_NUMBER_PATTERN = "/^08[7-9][0-9]{7}$/";
     }
 
     private AuthConstants() {
