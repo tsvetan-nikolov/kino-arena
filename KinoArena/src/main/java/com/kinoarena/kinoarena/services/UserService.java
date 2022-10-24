@@ -1,5 +1,8 @@
-package com.kinoarena.kinoarena.model.services;
+package com.kinoarena.kinoarena.services;
 
+import com.kinoarena.kinoarena.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
@@ -10,30 +13,36 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.City;
 import com.kinoarena.kinoarena.model.entities.Movie;
+import com.kinoarena.kinoarena.model.entities.Role;
 import com.kinoarena.kinoarena.model.entities.User;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.repositories.CityRepository;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
+import com.kinoarena.kinoarena.model.repositories.RoleRepository;
 import com.kinoarena.kinoarena.model.repositories.UserRepository;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.kinoarena.kinoarena.controller.AbstractController.LOGGED;
+import static com.kinoarena.kinoarena.constant.AuthConstants.Role.ROLE_ADMIN;
+import static com.kinoarena.kinoarena.constant.AuthConstants.Role.ROLE_USER;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private MovieRepository movieRepository;
@@ -46,6 +55,8 @@ public class UserService {
     private ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
 
     public UserInfoResponse register(RegisterRequestDTO user) {
         validateRegisterInformation(user);
@@ -61,6 +72,8 @@ public class UserService {
         String cityName = user.getCityName();
         City city = cityRepository.findFirstByName(cityName).orElse(cityRepository.save(new City(cityName)));
         newUser.setCity(city);
+
+        setUserRoles(newUser);
 
         userRepository.save(newUser);
         return newUser;
@@ -176,18 +189,18 @@ public class UserService {
     }
 
     @Transactional
-    public MovieResponseDTO addRemoveFavouriteMovie(int movieId, HttpSession s) {
-        checkIfLoggedIn(s);
+    public MovieResponseDTO addRemoveFavouriteMovie(int movieId, int userId) {
+//        checkIfLoggedIn(user);
 
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new NotFoundException("Movie doesn't exist"));
 
 
-        User u = userRepository.findById((int) s.getAttribute("USER_ID" /*TODO constants*/))
-                .orElseThrow(() -> new NotFoundException("Can't add movie to favourites"));
+        User u = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User doesn't exist"));
 
 
-        boolean movieAlreadyInFavourites = u.getFavouriteMovies().contains(movie) || movie.getUsers().contains(u);
+        boolean movieAlreadyInFavourites = u.getFavouriteMovies().stream().anyMatch(m -> m.getId() == movieId);
         MovieResponseDTO movieResponse = new MovieResponseDTO();
         if (movieAlreadyInFavourites) {
             u.getFavouriteMovies().remove(movie);
@@ -204,15 +217,15 @@ public class UserService {
         return movieResponse;
     }
 
-    private static void checkIfLoggedIn(HttpSession s) {
-        if (s.getAttribute(LOGGED) != null) {
-            if (!(boolean) s.getAttribute(LOGGED)) {
-                throw new BadRequestException("You must first log in!");
-            }
-        } else {
-            throw new BadRequestException("You must first log in!");
-        }
-    }
+//    private static void checkIfLoggedIn(User user) {
+//        if (s.getAttribute(LOGGED) != null) {
+//            if (!(boolean) s.getAttribute(LOGGED)) {
+//                throw new BadRequestException("You must first log in!");
+//            }
+//        } else {
+//            throw new BadRequestException("You must first log in!");
+//        }
+//    }
 
     public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
         User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
@@ -222,5 +235,31 @@ public class UserService {
                 .map(m -> modelMapper.map(m, MovieWithoutUsersDTO.class))
                 .collect(Collectors.toList()));
         return dto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    @PostConstruct
+    public void initRoles() {
+        if (roleRepository.count() > 0) {
+            return;
+        }
+
+        roleRepository.saveAll(
+                List.of(new Role(ROLE_ADMIN), new Role(ROLE_USER)));
+    }
+
+    private void setUserRoles(User user) {
+        var userRoles = new ArrayList<>(Collections.singleton(ROLE_USER));
+
+        var userExists = userRepository.count() > 0;
+        if (!userExists) {
+            userRoles.add(ROLE_ADMIN);
+        }
+
+        user.getRoles().addAll(roleRepository.findAllByNameIn(userRoles));
     }
 }

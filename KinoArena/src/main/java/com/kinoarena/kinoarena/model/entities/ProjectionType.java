@@ -1,11 +1,17 @@
 package com.kinoarena.kinoarena.model.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "projection_types")
 public class ProjectionType {
@@ -17,5 +23,5 @@ public class ProjectionType {
     @Column
     private double additionalPrice;
     @OneToMany(mappedBy = "projectionType")
-    private List<Projection> projections;
+    private Set<Projection> projections = new HashSet<>();
 }

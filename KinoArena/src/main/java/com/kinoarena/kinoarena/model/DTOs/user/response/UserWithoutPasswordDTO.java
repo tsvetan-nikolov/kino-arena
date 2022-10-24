@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.model.DTOs.user.response;
+
 import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
-import com.kinoarena.kinoarena.model.entities.Movie;
 import lombok.Data;
 
 import java.time.LocalDate;

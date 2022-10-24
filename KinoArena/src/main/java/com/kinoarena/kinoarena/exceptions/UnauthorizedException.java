@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.model.exceptions;
+package com.kinoarena.kinoarena.exceptions;
 
 public class UnauthorizedException extends RuntimeException {
     public UnauthorizedException(String msg) {

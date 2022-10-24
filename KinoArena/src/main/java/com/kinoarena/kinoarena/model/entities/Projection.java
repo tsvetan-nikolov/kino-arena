@@ -1,14 +1,19 @@
 package com.kinoarena.kinoarena.model.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "projections")
 public class Projection {
@@ -29,9 +34,9 @@ public class Projection {
     @JoinColumn(name = "hall_id")
     private Hall hall;
     @OneToMany(mappedBy = "projection")
-    private List<Seat> seats;
+    private Set<Seat> seats = new HashSet<>();
     @OneToMany(mappedBy = "projection")
-    private List<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<>();
     @Column
     private double basePrice;
 }

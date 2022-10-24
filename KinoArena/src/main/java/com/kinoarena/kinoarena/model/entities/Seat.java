@@ -2,12 +2,17 @@ package com.kinoarena.kinoarena.model.entities;
 
 
 import lombok.Data;
-import lombok.Generated;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "seats")
 public class Seat {
@@ -24,5 +29,5 @@ public class Seat {
     @JoinColumn(name = "projection_id")
     private Projection projection;
     @OneToMany(mappedBy = "seat")
-    private List<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<>();
 }

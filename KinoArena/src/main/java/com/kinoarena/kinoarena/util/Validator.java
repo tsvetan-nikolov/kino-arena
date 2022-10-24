@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.util;
 
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 
 import static com.kinoarena.kinoarena.util.Constants.*;
 

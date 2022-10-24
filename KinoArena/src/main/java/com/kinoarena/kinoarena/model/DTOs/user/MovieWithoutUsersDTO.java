@@ -1,10 +1,8 @@
 package com.kinoarena.kinoarena.model.DTOs.user;
 
-import com.kinoarena.kinoarena.model.entities.AgeRestriction;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class MovieWithoutUsersDTO {

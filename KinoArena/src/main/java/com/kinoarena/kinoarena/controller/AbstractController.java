@@ -1,10 +1,10 @@
 package com.kinoarena.kinoarena.controller;
 
+import com.kinoarena.kinoarena.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
-public abstract class AbstractController {
+public abstract class AbstractController /*TODO implement*/ {
 
     public static final String LOGGED = "LOGGED";
     public static final String USER_ID = "USER_ID";
@@ -41,7 +41,7 @@ public abstract class AbstractController {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDTO handleAllOthers(Exception e) {
-        return  buildErrorInfo(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        return buildErrorInfo(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ErrorDTO buildErrorInfo(Exception e, HttpStatus status) {

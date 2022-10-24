@@ -1,13 +1,18 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "cinemas")
+@Builder
 public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +25,5 @@ public class Cinema {
     @JoinColumn(name = "city_id")
     private City city;
     @OneToMany
-    private List<Hall> halls;
+    private Set<Hall> halls = new HashSet<>();
 }

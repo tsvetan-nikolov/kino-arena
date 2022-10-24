@@ -1,11 +1,8 @@
 package com.kinoarena.kinoarena.model.DTOs.user.request;
 
-import com.kinoarena.kinoarena.model.entities.Cinema;
-import com.kinoarena.kinoarena.model.entities.City;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
@@ -14,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 public class RegisterRequestDTO {
 
-//    TODO: check if @NotNull should be used or not
+    //    TODO: check if @NotNull should be used or not
     @NotEmpty
     private String firstName;
 
@@ -34,10 +31,10 @@ public class RegisterRequestDTO {
     @NotEmpty
     private String confirmPassword;
 
+    private String cityName;
+
     @NotEmpty
     private LocalDate dateOfBirth;
-
-    private String cityName;
 
 //    private Cinema cinema;
 }

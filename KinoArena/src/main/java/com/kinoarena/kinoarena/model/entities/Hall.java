@@ -1,13 +1,16 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "halls")
+@Builder
 public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +18,8 @@ public class Hall {
     @ManyToOne
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
-    @OneToMany(mappedBy = "hall")
-    private List<Projection> projections;
+    @Column
+    private int number;
+//    @OneToMany(mappedBy = "hall")
+//    private Set<Projection> projections = new HashSet<>();
 }

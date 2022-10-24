@@ -1,19 +1,20 @@
 package com.kinoarena.kinoarena.controller;
 
+import com.kinoarena.kinoarena.annotation.UserId;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.model.services.UserService;
+import com.kinoarena.kinoarena.model.entities.User;
+import com.kinoarena.kinoarena.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -36,26 +37,26 @@ public class UserController extends AbstractController {
         return userService.register(user);
     }
 
-    @PostMapping(value = "/auth")
-    public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpServletRequest request) {
-        if (request.getSession().getAttribute(LOGGED) != null) {
-            if ((boolean) request.getSession().getAttribute(LOGGED)) {
-                throw new BadRequestException("You are already logged in!");
-            }
-        }
+//    @PostMapping(value = "/auth")
+//    public UserWithoutPasswordDTO login(@RequestBody LoginDTO dto, HttpServletRequest request) {
+//        if (request.getSession().getAttribute(LOGGED) != null) {
+//            if ((boolean) request.getSession().getAttribute(LOGGED)) {
+//                throw new BadRequestException("You are already logged in!");
+//            }
+//        }
+//
+//        UserWithoutPasswordDTO result = userService.login(dto);
+//
+//        if (result != null) {
+//            logUser(result, request);
+//            return result;
+//        } else {
+//            throw new BadRequestException("Wrong Credentials!");
+//        }
+//    }
 
-        UserWithoutPasswordDTO result = userService.login(dto);
-
-        if (result != null) {
-            logUser(result, request);
-            return result;
-        } else {
-            throw new BadRequestException("Wrong Credentials!");
-        }
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession s) {
+    @GetMapping("/logout") /*TODO you have no power here / unreachable endpoint*/
+    public String logout(HttpSession s, @AuthenticationPrincipal User user) {
         if (s.getAttribute(LOGGED) != null) {
             if ((boolean) s.getAttribute(LOGGED)) {
                 s.invalidate();
@@ -77,8 +78,9 @@ public class UserController extends AbstractController {
     }
 
     @PostMapping(value = "/users/add_fav_movie/{movieId}")
-    public MovieResponseDTO addRemoveFavouriteMovie(@PathVariable int movieId, HttpSession s) {
-        return userService.addRemoveFavouriteMovie(movieId, s);
+    @Transactional
+    public MovieResponseDTO addRemoveFavouriteMovie(@PathVariable int movieId, @UserId int userId) {
+        return userService.addRemoveFavouriteMovie(movieId, userId);
     }
 
     @GetMapping(value = "users/{uid}/favourite-movies")

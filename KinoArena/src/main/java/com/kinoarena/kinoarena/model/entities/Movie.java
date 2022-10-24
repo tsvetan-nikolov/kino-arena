@@ -1,13 +1,20 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import com.kinoarena.kinoarena.model.DTOs.user.UserWithoutMoviesDTO;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -31,14 +38,15 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "age_restriction_id")
     private AgeRestriction ageRestriction;
-    @OneToMany(mappedBy = "movie")
-    private List<Projection> projections;
-    @ManyToMany(mappedBy = "favouriteMovies")
-    private List<User> users;
+//    @OneToMany(mappedBy = "movie")
+//    private Set<Projection> projections = new HashSet<>();
+    @ManyToMany(mappedBy = "favouriteMovies", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "movies_genres",
-                joinColumns = @JoinColumn(name = "movie_id"),
-                inverseJoinColumns = @JoinColumn(name = "movie_genre_id"))
-    private List<Genre> movieGenres;
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_genre_id"))
+    private Set<Genre> movieGenres = new HashSet<>();
 }

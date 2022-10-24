@@ -1,13 +1,15 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "cities")
@@ -22,8 +24,8 @@ public class City {
     private int id;
     @Column
     private String name;
+//    @OneToMany(mappedBy = "city")
+//    private Set<Cinema> cinemas = new HashSet<>();
     @OneToMany(mappedBy = "city")
-    private List<Cinema> cinemas;
-    @OneToMany(mappedBy = "city")
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 }

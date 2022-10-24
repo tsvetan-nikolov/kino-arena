@@ -8,8 +8,8 @@ POST http://localhost:8080/auth
 Content-Type: application/json
 
 {
-  "email" : "steph@gmail.com",
-  "password" : "Stephanie"
+  "email": "steph@gmail.com",
+  "password": "Stephanie"
 }
 
 ### change password
@@ -18,9 +18,9 @@ PUT http://localhost:8080/users/5
 Content-Type: application/json
 
 {
-  "old_password" : "Stephanie",
-  "new_password" : "Polina09",
-  "confirm_password" : "Polina09"
+  "old_password": "Stephanie",
+  "new_password": "Polina09",
+  "confirm_password": "Polina09"
 }
 
 ### edit profile
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 {
   "first_name": "Stefani",
-  "phone_number" : "0852059644",
-  "address" : "Malta",
-  "city" : "Valetta"
+  "phone_number": "0852059644",
+  "address": "Malta",
+  "city": "Valetta"
 }
