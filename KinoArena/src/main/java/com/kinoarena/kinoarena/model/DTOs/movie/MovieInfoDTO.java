@@ -1,6 +1,9 @@
 package com.kinoarena.kinoarena.model.DTOs.movie;
 
+import com.kinoarena.kinoarena.model.DTOs.age_restriction.AgeRestrictionForMovieDTO;
+import com.kinoarena.kinoarena.model.DTOs.genre.GenreWithoutMoviesDTO;
 import com.kinoarena.kinoarena.model.entities.AgeRestriction;
+import com.kinoarena.kinoarena.model.entities.Genre;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.entities.User;
 import lombok.Data;
@@ -19,7 +22,6 @@ public class MovieInfoDTO {
     private int duration;
     private String actors;
     private String director;
-//    private AgeRestriction ageRestriction;
-//    private List<Projection> projections;
-//    private List<User> users;
+    private AgeRestrictionForMovieDTO ageRestriction;
+    private List<GenreWithoutMoviesDTO> genres;
 }

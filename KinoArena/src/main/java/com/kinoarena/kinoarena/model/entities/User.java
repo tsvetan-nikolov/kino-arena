@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

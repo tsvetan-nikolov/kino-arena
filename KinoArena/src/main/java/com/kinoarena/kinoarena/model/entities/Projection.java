@@ -16,7 +16,7 @@ public class Projection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private LocalTime start_time;
+    private LocalTime startTime;
     @Column
     private LocalDate date;
     @ManyToOne

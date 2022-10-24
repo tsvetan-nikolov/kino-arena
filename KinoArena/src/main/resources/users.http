@@ -1,4 +1,16 @@
-### show movies
+### get movie details
+
+GET localhost:8080/movies/2
+
+###show cinema program
+
+GET localhost:8080/cinemas/1/program
+
+###show cinemas
+
+GET localhost:8080/cinemas
+
+### show favourite movies
 
 GET localhost:8080/users/1/favourite-movies
 
@@ -29,8 +41,11 @@ PUT http://localhost:8080/users/5/edit
 Content-Type: application/json
 
 {
-  "first_name": "Stefani",
-  "phone_number" : "0852059644",
+  "first_name": "Stephie",
+  "middle_name" : "Pavlova",
+  "last_name" : "Petrova",
+  "phone_number" : "0852059044",
+  "date_of_birth" : "03/02/2020",
   "address" : "Malta",
-  "city" : "Valetta"
+  "city" : "Dublin"
 }

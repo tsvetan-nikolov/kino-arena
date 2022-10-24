@@ -1,5 +1,6 @@
 package com.kinoarena.kinoarena.controller;
 
+import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 public class UserController extends AbstractController {
@@ -66,7 +68,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "users/{uid}/favourite-movies")
-    public UserWithoutPasswordDTO showFavoriteMovies(@PathVariable int uid) {
+    public List<FavouriteMovieDTO> showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }
 }

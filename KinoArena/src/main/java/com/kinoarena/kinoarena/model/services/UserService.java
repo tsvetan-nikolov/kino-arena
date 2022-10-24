@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.model.services;
 
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.MovieWithoutUsersDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
@@ -25,6 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,7 +36,6 @@ public class UserService {
 
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -141,37 +142,51 @@ public class UserService {
     }
 
     private void setNewValues(EditProfileDTO dto, User u) {
-        if (!dto.getFirstName().isEmpty()) {
+        if (!dto.getFirstName().equals(u.getFirstName())) {
             u.setFirstName(dto.getFirstName());
         }
-        if (dto.getMiddleName() != null) {
+
+        if (!dto.getMiddleName().equals(u.getMiddleName())) {
             u.setMiddleName(dto.getMiddleName());
         }
-        if (dto.getLastName() != null) {
+
+        if (!dto.getLastName().equals(u.getLastName())) {
             u.setLastName(dto.getLastName());
         }
-        //todo validate phone number
-        if (dto.getPhoneNumber() != null) {
-            u.setPhoneNumber(dto.getPhoneNumber());
+
+        if (!dto.getPhoneNumber().equals(u.getPhoneNumber())) {
+            if(Validator.validatePhoneNumber(dto.getPhoneNumber())) {
+                u.setPhoneNumber(dto.getPhoneNumber());
+            } else {
+                throw new BadRequestException("Invalid phone number!");
+            }
         }
-        //todo validate DoB
-        if (dto.getDateOfBirth() != null) {
-            u.setDateOfBirth(dto.getDateOfBirth());
+
+        if (!dto.getDateOfBirth().equals(u.getDateOfBirth())) {
+            if(Validator.dateIsValid(dto.getDateOfBirth())) {
+                u.setDateOfBirth(dto.getDateOfBirth());
+            } else {
+                throw new BadRequestException("Invalid date of birth!");
+            }
         }
-        if (dto.getAddress() != null) {
+
+        if (!dto.getAddress().equals(u.getAddress())) {
             u.setAddress(dto.getAddress());
         }
-        if (dto.getCity() != null) {
-            Optional<City> city = cityRepository.findFirstByName(dto.getCity());
 
+        if (!dto.getCity().equals(u.getCity().getName())) {
+            Optional<City> city = cityRepository.findFirstByName(dto.getCity());
+            City c = new City();
             if (city.isPresent()) {
-                City c = city.get();
-                u.setCity(c);
+                c = city.get();
+            } else {
+                c.setName(dto.getCity());
+                cityRepository.save(c);
             }
-            //todo if city is not in db add it
+
+            u.setCity(c);
         }
     }
-
 
     public MovieInfoDTO addFavouriteMovie(int movieId, HttpSession s) {
         Movie movie = movieRepository.findById(movieId)
@@ -187,13 +202,13 @@ public class UserService {
         return modelMapper.map(movie, MovieInfoDTO.class);
     }
 
-    public UserWithoutPasswordDTO showFavouriteMovies(int uid) {
+    public List<FavouriteMovieDTO> showFavouriteMovies(int uid) {
         User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
         UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
         dto.setFavouriteMovies(user.getFavouriteMovies()
                 .stream()
-                .map(m -> modelMapper.map(m, MovieWithoutUsersDTO.class))
+                .map(m -> modelMapper.map(m, FavouriteMovieDTO.class))
                 .collect(Collectors.toList()));
-        return dto;
+        return dto.getFavouriteMovies();
     }
 }
