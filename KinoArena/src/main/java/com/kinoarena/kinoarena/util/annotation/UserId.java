@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.annotation;
+package com.kinoarena.kinoarena.util.annotation;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

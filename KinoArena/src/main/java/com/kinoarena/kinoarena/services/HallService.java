@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallRequestDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;

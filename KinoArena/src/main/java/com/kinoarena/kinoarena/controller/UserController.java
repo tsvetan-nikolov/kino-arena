@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.annotation.UserId;
+import com.kinoarena.kinoarena.util.annotation.UserId;
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;

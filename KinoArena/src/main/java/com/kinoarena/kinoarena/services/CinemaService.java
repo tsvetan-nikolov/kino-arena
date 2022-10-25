@@ -6,6 +6,7 @@ import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.City;
 import com.kinoarena.kinoarena.model.repositories.CinemaRepository;
@@ -26,8 +27,8 @@ public class CinemaService {
     private final CityRepository cityRepository;
     private final CinemaRepository cinemaRepository;
 
-    private ModelMapper modelMapper;
-    private CinemaDAO cinemaDAO;
+    private final ModelMapper modelMapper;
+    private final CinemaDAO cinemaDAO;
 
     public Cinema add(CinemaRequestDTO c) {
         City city = cityRepository.findFirstByName(c.getCityName())
@@ -86,7 +87,7 @@ public class CinemaService {
         return dto;
     }
 
-    public Map<String, MovieProgramDTO> getProgram(int cid) {
+    public List<ProjectionInfoDTO> getProgram(int cid) {
         return cinemaDAO.getProgram(cid);
     }
 }

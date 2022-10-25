@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.DTOs.age_restriction.AgeRestrictionForMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.genre.GenreWithoutMoviesDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;

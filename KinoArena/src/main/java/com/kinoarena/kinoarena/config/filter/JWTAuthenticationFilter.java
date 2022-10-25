@@ -1,7 +1,7 @@
-package com.kinoarena.kinoarena.filter;
+package com.kinoarena.kinoarena.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.JwtService;

@@ -1,8 +1,8 @@
 package com.kinoarena.kinoarena.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kinoarena.kinoarena.filter.JWTAuthenticationFilter;
-import com.kinoarena.kinoarena.filter.JWTAuthorizationFilter;
+import com.kinoarena.kinoarena.config.filter.JWTAuthenticationFilter;
+import com.kinoarena.kinoarena.config.filter.JWTAuthorizationFilter;
 import com.kinoarena.kinoarena.services.JwtService;
 import com.kinoarena.kinoarena.services.UserService;
 import org.springframework.beans.factory.annotation.Value;

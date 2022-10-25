@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.exceptions;
+package com.kinoarena.kinoarena.model.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String msg) {

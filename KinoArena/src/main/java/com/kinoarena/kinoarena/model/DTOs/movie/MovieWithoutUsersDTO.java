@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.model.DTOs.user;
+package com.kinoarena.kinoarena.model.DTOs.movie;
 
 import lombok.Data;
 

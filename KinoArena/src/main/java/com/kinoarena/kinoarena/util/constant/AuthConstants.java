@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.constant;
+package com.kinoarena.kinoarena.util.constant;
 
 public class AuthConstants {
 

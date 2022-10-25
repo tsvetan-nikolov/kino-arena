@@ -1,11 +1,11 @@
 package com.kinoarena.kinoarena.util;
 
-import com.kinoarena.kinoarena.constant.AuthConstants;
-import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.util.constant.AuthConstants;
 
 import java.time.LocalDate;
 
-import static com.kinoarena.kinoarena.constant.AuthConstants.UserAuthenticationConstants.*;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.UserAuthenticationConstants.*;
 
 public class Validator {
 

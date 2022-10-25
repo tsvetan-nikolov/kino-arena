@@ -1,6 +1,6 @@
 ### get movie details
 
-GET localhost:8080/movies/2
+GET localhost:8080/movies/1
 
 ###show cinema program
 

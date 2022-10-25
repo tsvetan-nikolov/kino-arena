@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.filter;
+package com.kinoarena.kinoarena.config.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.kinoarena.kinoarena.constant.AuthConstants.JWT.HEADER_AUTHORIZATION;
-import static com.kinoarena.kinoarena.constant.AuthConstants.JWT.TOKEN_PREFIX;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.HEADER_AUTHORIZATION;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
