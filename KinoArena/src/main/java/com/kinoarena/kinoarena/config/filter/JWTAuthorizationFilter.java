@@ -1,10 +1,11 @@
-package com.kinoarena.kinoarena.filter;
+package com.kinoarena.kinoarena.config.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.kinoarena.kinoarena.constant.AuthConstants.JWT.HEADER_AUTHORIZATION;
-import static com.kinoarena.kinoarena.constant.AuthConstants.JWT.TOKEN_PREFIX;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.HEADER_AUTHORIZATION;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -36,7 +37,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(
             HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        var header = req.getHeader(HEADER_AUTHORIZATION);
+        String header = req.getHeader(HEADER_AUTHORIZATION);
 
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(req, res);
@@ -50,7 +51,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        var token = request.getHeader(HEADER_AUTHORIZATION);
+        String token = request.getHeader(HEADER_AUTHORIZATION);
         if (token != null) {
             String email =
                     JWT.require(Algorithm.HMAC512(secretKey.getBytes()))
@@ -61,7 +62,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             //TODO Extract into jwtService
 
             if (email != null) {
-                var entity = userDetailsService.loadUserByUsername(email);
+                UserDetails entity = userDetailsService.loadUserByUsername(email);
                 return new UsernamePasswordAuthenticationToken(entity, null, entity.getAuthorities());
             }
 

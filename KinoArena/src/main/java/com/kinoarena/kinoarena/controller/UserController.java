@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.annotation.UserId;
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
@@ -10,8 +9,8 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.UserService;
+import com.kinoarena.kinoarena.util.annotation.UserId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +57,7 @@ public class UserController extends AbstractController {
 //        }
 //    }
 
-    @GetMapping("/logout") /*TODO you have no power here / unreachable endpoint*/
+    @GetMapping("/logout") /*TODO blacklist stuff*/
     public String logout(HttpSession s, @AuthenticationPrincipal User user) {
         if (s.getAttribute(LOGGED) != null) {
             if ((boolean) s.getAttribute(LOGGED)) {

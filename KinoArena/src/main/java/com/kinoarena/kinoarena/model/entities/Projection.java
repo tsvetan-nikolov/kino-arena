@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -33,10 +30,6 @@ public class Projection {
     @ManyToOne
     @JoinColumn(name = "hall_id")
     private Hall hall;
-    @OneToMany(mappedBy = "projection")
-    private Set<Seat> seats = new HashSet<>();
-    @OneToMany(mappedBy = "projection")
-    private Set<Ticket> tickets = new HashSet<>();
     @Column
     private double basePrice;
 }

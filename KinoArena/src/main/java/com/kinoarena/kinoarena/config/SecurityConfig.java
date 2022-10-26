@@ -29,7 +29,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeRequests()
+        return http
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/register")
                 .permitAll()
                 .anyRequest()
@@ -51,7 +52,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and().build();
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .build();
     }
 
     @Bean

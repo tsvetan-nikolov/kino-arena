@@ -1,7 +1,6 @@
 package com.kinoarena.kinoarena.model.entities;
 
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,11 +22,7 @@ public class Seat {
     private int number;
     @Column
     private int row;
-    @Column
-    private boolean isTaken;
     @ManyToOne
-    @JoinColumn(name = "projection_id")
-    private Projection projection;
-    @OneToMany(mappedBy = "seat")
-    private Set<Ticket> tickets = new HashSet<>();
+    @JoinColumn(name = "hall_id")
+    private Hall hall; //TODO ask krasi
 }

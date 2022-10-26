@@ -1,10 +1,10 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.DTOs.age_restriction.AgeRestrictionForMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.genre.GenreWithoutMoviesDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Movie;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,10 +19,11 @@ public class MovieService {
 
     private MovieRepository movieRepository;
     private ModelMapper modelMapper;
+
     public MovieInfoDTO getMovieInfo(int mid) {
         Optional<Movie> movie = movieRepository.findById(mid);
 
-        if(movie.isPresent()) {
+        if (movie.isPresent()) {
             Movie m = movie.get();
 
             MovieInfoDTO dto = modelMapper.map(m, MovieInfoDTO.class);

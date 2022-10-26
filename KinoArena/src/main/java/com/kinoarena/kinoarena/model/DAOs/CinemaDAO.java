@@ -2,11 +2,9 @@ package com.kinoarena.kinoarena.model.DAOs;
 
 import com.kinoarena.kinoarena.model.DTOs.age_restriction.AgeRestrictionForMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +16,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -28,16 +25,28 @@ public class CinemaDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-//todo refactoring and make jdbcTemplate work
     public Map<String, MovieProgramDTO> getProgram(int cid) {
-        String query = "SELECT p.id AS projectionId, p.start_time AS projectionStart, p.date AS projectionDate, pt.id AS projectionTypeId, " +
-                "pt.type AS projectionType, m.id AS movieId, m.name AS movieName, m.is_dubbed AS isDubbed, m.premiere AS moviePremiere, " +
+        String query = "SELECT p.id AS projectionId, " +
+                "p.start_time AS projectionStart, " +
+                "p.date AS projectionDate, " +
+                "pt.id AS projectionTypeId, " +
+                "pt.type AS projectionType, " +
+                "m.id AS movieId, " +
+                "m.name AS movieName, " +
+                "m.is_dubbed AS isDubbed, " +
+                "m.premiere AS moviePremiere, " +
                 "ar.category AS ageRestriction " +
-                "FROM cinemas AS c JOIN halls AS h ON (c.id = h.cinema_id) " +
-                "JOIN projections AS p ON (h.id = p.hall_id) " +
-                "JOIN movies AS m ON (m.id = p.movie_id) " +
-                "JOIN projection_types AS pt ON (pt.id = p.projection_type_id) " +
-                "JOIN age_restrictions AS ar ON (ar.id = m.age_restriction_id) " +
+                "FROM cinemas AS c " +
+                "JOIN halls AS h " +
+                "ON (c.id = h.cinema_id) " +
+                "JOIN projections AS p " +
+                "ON (h.id = p.hall_id) " +
+                "JOIN movies AS m " +
+                "ON (m.id = p.movie_id) " +
+                "JOIN projection_types AS pt " +
+                "ON (pt.id = p.projection_type_id) " +
+                "JOIN age_restrictions AS ar " +
+                "ON (ar.id = m.age_restriction_id) " +
                 "WHERE c.id = ? " +
                 "GROUP BY m.name, p.date, pt.type, p.start_time";
 
@@ -45,24 +54,24 @@ public class CinemaDAO {
 
         Map<String, MovieProgramDTO> program = new HashMap<>();
 
-        if(dataSource != null) {
+        if (dataSource != null) {
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, cid);
-                ResultSet rs = ps.executeQuery();
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, cid);
+                ResultSet resultSet = statement.executeQuery();
 
-                while(rs.next()) {
+                while (resultSet.next()) {
 
-                    if(!program.containsKey(rs.getString("title"))) {
-                        MovieProgramDTO movie = setMovieValues(rs);
+                    if (!program.containsKey(resultSet.getString("title"))) {
+                        MovieProgramDTO movie = setMovieValues(resultSet);
 
-                        program.put(rs.getString("title"), movie);
+                        program.put(resultSet.getString("title"), movie);
                     }
 
-                    ProjectionInfoDTO projection = setProjectionValues(rs);
+                    ProjectionInfoDTO projection = setProjectionValues(resultSet);
 
-                    program.get(rs.getString("title")).getProjections().add(projection);
+                    program.get(resultSet.getString("title")).getProjections().add(projection);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException("Failed connection" + e.getMessage());

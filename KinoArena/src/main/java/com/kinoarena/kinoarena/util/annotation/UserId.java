@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.annotation;
+package com.kinoarena.kinoarena.util.annotation;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@AuthenticationPrincipal(expression = "@extractUserId.apply(#this)", errorOnInvalidType=true)
+@AuthenticationPrincipal(expression = "@extractUserId.apply(#this)", errorOnInvalidType = true)
 
 public @interface UserId {
 }

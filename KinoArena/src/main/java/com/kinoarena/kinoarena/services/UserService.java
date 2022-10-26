@@ -1,13 +1,9 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
@@ -15,6 +11,9 @@ import com.kinoarena.kinoarena.model.entities.City;
 import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.entities.Role;
 import com.kinoarena.kinoarena.model.entities.User;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.repositories.CityRepository;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
 import com.kinoarena.kinoarena.model.repositories.RoleRepository;
@@ -36,8 +35,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.kinoarena.kinoarena.constant.AuthConstants.Role.ROLE_ADMIN;
-import static com.kinoarena.kinoarena.constant.AuthConstants.Role.ROLE_USER;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.Role.ROLE_ADMIN;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.Role.ROLE_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -261,9 +260,9 @@ public class UserService implements UserDetailsService {
     }
 
     private void setUserRoles(User user) {
-        var userRoles = new ArrayList<>(Collections.singleton(ROLE_USER));
+        List<String> userRoles = new ArrayList<>(Collections.singleton(ROLE_USER));
 
-        var userExists = userRepository.count() > 0;
+        boolean userExists = userRepository.count() > 0;
         if (!userExists) {
             userRoles.add(ROLE_ADMIN);
         }

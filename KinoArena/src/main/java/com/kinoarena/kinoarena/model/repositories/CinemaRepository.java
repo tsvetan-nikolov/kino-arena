@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface CinemaRepository extends JpaRepository<Cinema, Integer> {
 
 
-    Cinema findFirstByName(String name);
+    Optional<Cinema> findFirstByName(String name);
 
     Optional<Cinema> findFirstByAddress(String address);
 
-    Cinema findFirstByNameOrAddress(String name, String address);
+    Optional<Cinema> findFirstByNameOrAddress(String name, String address);
 
-    Cinema findFirstByCityName(String cityName);
+    Optional<Cinema> findFirstByCityName(String cityName);
 }

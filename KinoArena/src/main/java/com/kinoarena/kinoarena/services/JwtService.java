@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.kinoarena.kinoarena.constant.AuthConstants.JWT.EXPIRATION_TIME;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.EXPIRATION_TIME;
 
 @Service
 public class JwtService {

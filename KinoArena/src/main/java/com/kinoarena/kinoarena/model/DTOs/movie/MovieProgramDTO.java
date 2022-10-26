@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.model.DTOs.movie;
 
 import com.kinoarena.kinoarena.model.DTOs.age_restriction.AgeRestrictionForMovieDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import lombok.Data;
 
 import java.time.LocalDate;

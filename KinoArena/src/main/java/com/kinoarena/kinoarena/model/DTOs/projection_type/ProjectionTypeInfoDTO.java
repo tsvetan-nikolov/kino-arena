@@ -1,14 +1,11 @@
 package com.kinoarena.kinoarena.model.DTOs.projection_type;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-public class ProjectionTypeInfoDTO {
-    private int id;
-    private String type;
-
-    public ProjectionTypeInfoDTO(int id, String type) {
-        this.id = id;
-        this.type = type;
-    }
+@RequiredArgsConstructor
+public class ProjectionTypeInfoDTO { //todo not needed, because same as ProjectionType
+    private final int id;
+    private final String type;
 }

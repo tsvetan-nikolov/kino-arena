@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class CinemaController extends AbstractController{
+public class CinemaController extends AbstractController {
 
     private final CinemaService cinemaService;
 

@@ -1,17 +1,16 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tickets")
+@Builder
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

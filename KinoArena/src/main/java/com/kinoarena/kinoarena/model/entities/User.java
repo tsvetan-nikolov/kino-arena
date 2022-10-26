@@ -43,9 +43,6 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-    @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Ticket> tickets = new HashSet<>();
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "users_favourite_movies",

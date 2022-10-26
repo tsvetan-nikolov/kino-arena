@@ -1,8 +1,8 @@
 package com.kinoarena.kinoarena.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kinoarena.kinoarena.filter.JWTAuthenticationFilter;
-import com.kinoarena.kinoarena.filter.JWTAuthorizationFilter;
+import com.kinoarena.kinoarena.config.filter.JWTAuthenticationFilter;
+import com.kinoarena.kinoarena.config.filter.JWTAuthorizationFilter;
 import com.kinoarena.kinoarena.services.JwtService;
 import com.kinoarena.kinoarena.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +35,10 @@ public class JWTFilterConfigurer extends AbstractHttpConfigurer<JWTFilterConfigu
     @Override
     public void configure(HttpSecurity http) {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-        http.addFilter(new JWTAuthenticationFilter(
-                        objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
+
+        http
+                .addFilter(new JWTAuthenticationFilter
+                        (objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager, secretKey, userDetailsService));
 
     }

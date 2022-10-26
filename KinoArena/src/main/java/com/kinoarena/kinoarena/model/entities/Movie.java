@@ -1,6 +1,5 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +37,7 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "age_restriction_id")
     private AgeRestriction ageRestriction;
-//    @OneToMany(mappedBy = "movie")
+    //    @OneToMany(mappedBy = "movie")
 //    private Set<Projection> projections = new HashSet<>();
     @ManyToMany(mappedBy = "favouriteMovies", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)

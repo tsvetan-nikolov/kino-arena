@@ -1,11 +1,11 @@
 package com.kinoarena.kinoarena.util;
 
-import com.kinoarena.kinoarena.constant.AuthConstants;
-import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
+import com.kinoarena.kinoarena.util.constant.AuthConstants;
 
 import java.time.LocalDate;
 
-import static com.kinoarena.kinoarena.constant.AuthConstants.UserAuthenticationConstants.*;
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.UserAuthenticationConstants.*;
 
 public class Validator {
 
@@ -47,7 +47,7 @@ public class Validator {
     }
 
     public static boolean validatePhoneNumber(String phoneNumber) {
-        if(!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+        if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public class Validator {
     }
 
     public static boolean dateIsValid(LocalDate dateOfBirth) {
-        if(dateOfBirth.isAfter(LocalDate.now())) {
+        if (dateOfBirth.isAfter(LocalDate.now())) {
             return false;
         }
 

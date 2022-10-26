@@ -1,10 +1,10 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
