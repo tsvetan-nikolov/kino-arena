@@ -1,5 +1,6 @@
 package com.kinoarena.kinoarena.services;
 
+import com.kinoarena.kinoarena.model.entities.*;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
@@ -10,14 +11,7 @@ import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
-import com.kinoarena.kinoarena.model.entities.City;
-import com.kinoarena.kinoarena.model.entities.Movie;
-import com.kinoarena.kinoarena.model.entities.Role;
-import com.kinoarena.kinoarena.model.entities.User;
-import com.kinoarena.kinoarena.model.repositories.CityRepository;
-import com.kinoarena.kinoarena.model.repositories.MovieRepository;
-import com.kinoarena.kinoarena.model.repositories.RoleRepository;
-import com.kinoarena.kinoarena.model.repositories.UserRepository;
+import com.kinoarena.kinoarena.model.repositories.*;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -48,6 +42,7 @@ public class UserService implements UserDetailsService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final GenderRepository genderRepository;
 
     public UserInfoResponse register(RegisterRequestDTO user) {
         validateRegisterInformation(user);
@@ -63,6 +58,14 @@ public class UserService implements UserDetailsService {
         String cityName = user.getCityName();
         City city = cityRepository.findFirstByName(cityName).orElse(cityRepository.save(new City(cityName)));
         newUser.setCity(city);
+
+        String userGender = user.getGender();
+        Optional<Gender> gender = genderRepository.findFirstByGender(userGender);
+
+        if(gender.isPresent()) {
+            Gender g = gender.get();
+            newUser.setGender(g);
+        }
 
         setUserRoles(newUser);
 

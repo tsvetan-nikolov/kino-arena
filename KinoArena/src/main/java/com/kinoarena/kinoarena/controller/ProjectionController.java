@@ -18,6 +18,7 @@ public class ProjectionController extends AbstractController {
         return 5;
     } //TODO
 
+    //todo tozi url e pod golqm vurpros :DD
     @GetMapping("/projections/filter")
     public List<ProjectionInfoDTO> filterProjections(@RequestBody FilterProjectionsRequestDTO request){
         return projectionService.filterProjections(request);
@@ -30,6 +31,7 @@ public class ProjectionController extends AbstractController {
 
     @GetMapping("/brands/{brand}/movies/{cinema}")
     public List<ProjectionInfoDTO> filterBrandProjections(@PathVariable String brand, @PathVariable String cinema) {
-        return projectionService.filterBrandProjections(brand, cinema);
+
+        return projectionService.filterBrandProjectionsByCinema(brand, cinema);
     }
 }

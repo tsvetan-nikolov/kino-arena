@@ -37,7 +37,9 @@ public class ProjectionService {
         return projectionDAO.getBrandProjections(brand);
     }
 
-    public List<ProjectionInfoDTO> filterBrandProjections(String brand, String cinema) {
-        return projectionDAO.filterBrandProjections(brand, cinema);
+    public List<ProjectionInfoDTO> filterBrandProjectionsByCinema(String brand, String cinema) {
+        String[] cinemaNameSplit = cinema.split("-");
+        String cinemaName = String.join(" ", cinemaNameSplit);
+        return projectionDAO.filterBrandProjections(brand, cinemaName);
     }
 }

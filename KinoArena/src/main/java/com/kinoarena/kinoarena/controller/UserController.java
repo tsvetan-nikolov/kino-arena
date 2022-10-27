@@ -11,7 +11,6 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +34,7 @@ public class UserController extends AbstractController {
 //        return userService.addUser(u);
 //    }
 
-    @PostMapping(value = "register")
+    @PostMapping(value = "/register")
     public UserInfoResponse register(@RequestBody @Valid @NotNull RegisterRequestDTO user) {
         return userService.register(user);
     }
@@ -75,7 +74,7 @@ public class UserController extends AbstractController {
         return userService.changePassword(uid, dto);
     }
 
-    @PutMapping(value = "users/{uid}/edit")
+    @PutMapping(value = "/users/{uid}/edit")
     public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO dto, @PathVariable int uid) {
         return userService.editProfile(dto, uid);
     }
@@ -86,7 +85,7 @@ public class UserController extends AbstractController {
         return userService.addRemoveFavouriteMovie(movieId, userId);
     }
 
-    @GetMapping(value = "users/{uid}/favourite-movies")
+    @GetMapping(value = "/users/{uid}/favourite-movies")
     public List<FavouriteMovieDTO> showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }

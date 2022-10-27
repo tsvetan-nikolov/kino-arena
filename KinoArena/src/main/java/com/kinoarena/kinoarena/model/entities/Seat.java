@@ -23,11 +23,4 @@ public class Seat {
     private int number;
     @Column
     private int row;
-    @Column
-    private boolean isTaken;
-    @ManyToOne
-    @JoinColumn(name = "projection_id")
-    private Projection projection;
-    @OneToMany(mappedBy = "seat")
-    private Set<Ticket> tickets = new HashSet<>();
 }

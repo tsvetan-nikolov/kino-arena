@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -89,5 +90,9 @@ public class CinemaService {
 
     public List<ProjectionInfoDTO> getProgram(int cid) {
         return cinemaDAO.getProgram(cid);
+    }
+
+    public List<CinemaInfoDTO> filterCinemasByCity(String cityName) {
+        return cinemaDAO.filterCinemasByCity(cityName);
     }
 }

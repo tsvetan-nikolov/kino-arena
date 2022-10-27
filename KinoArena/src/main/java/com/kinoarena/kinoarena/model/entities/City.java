@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -26,6 +24,4 @@ public class City {
     private String name;
 //    @OneToMany(mappedBy = "city")
 //    private Set<Cinema> cinemas = new HashSet<>();
-    @OneToMany(mappedBy = "city")
-    private Set<User> users = new HashSet<>();
 }

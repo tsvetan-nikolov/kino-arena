@@ -40,12 +40,19 @@ public class User implements UserDetails {
     private LocalDate dateOfBirth;
     @Column
     private String address;
+
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
+
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Ticket> tickets = new HashSet<>();
+
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "users_favourite_movies",

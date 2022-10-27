@@ -1,13 +1,10 @@
 package com.kinoarena.kinoarena.model.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -21,7 +18,5 @@ public class ProjectionType {
     @Column
     private String type;
     @Column
-    private double additionalPrice;
-    @OneToMany(mappedBy = "projectionType")
-    private Set<Projection> projections = new HashSet<>();
+    private double additionalCost;
 }

@@ -36,5 +36,8 @@ public class RegisterRequestDTO {
     @NotEmpty
     private LocalDate dateOfBirth;
 
+    @NotEmpty
+    private String gender;
+
 //    private Cinema cinema;
 }
