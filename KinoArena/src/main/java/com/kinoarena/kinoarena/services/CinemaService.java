@@ -5,10 +5,10 @@ import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaDeleteRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.City;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.repositories.CinemaRepository;
 import com.kinoarena.kinoarena.model.repositories.CityRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,11 @@ public class CinemaService {
     private final CinemaDAO cinemaDAO;
 
     public Cinema add(CinemaRequestDTO c) {
+        if (cinemaRepository.findFirstByAddress(c.getAddress()).isPresent()
+                || cinemaRepository.findFirstByName(c.getName()).isPresent()) {//todo should i check by the name too?
+            throw new BadRequestException("Cinema already exists");
+        }
+
         City city = cityRepository.findFirstByName(c.getCityName())
                 .orElse(cityRepository.save(new City(c.getCityName())));
 
@@ -50,22 +55,20 @@ public class CinemaService {
         City city = cityRepository.findFirstByName(c.getCityName())
                 .orElse(cityRepository.save(new City(c.getCityName())));
 
-        Cinema cinema = cinemaRepository.findFirstByNameOrAddress(c.getName(), c.getAddress());
+        Cinema cinema = cinemaRepository.findFirstByNameOrAddress(c.getName(), c.getAddress())
+                .orElseThrow(() -> new BadRequestException("Cinema doesn't exist!"));
 
-        if (cinema != null) {
-            cinema.setName(c.getName());
-            cinema.setAddress(c.getAddress());
-            cinema.setCity(city);
-        }
-
+        cinema.setName(c.getName());
+        cinema.setAddress(c.getAddress());
+        cinema.setCity(city);
         return cinema;
     }
 
     public String delete(CinemaDeleteRequestDTO c) {
-        Cinema cinema = cinemaRepository.findFirstByName(c.getName());
-        boolean cinemaIsPresent = cinema != null;
-        if (cinemaIsPresent) cinemaRepository.delete(cinema);
-        return cinemaIsPresent ? "Cinema deleted!" : "No cinema with name \"" + c.getName() + "\" found!";
+        Cinema cinema = cinemaRepository.findFirstByName(c.getName())
+                .orElseThrow(() -> new BadRequestException("No cinema with name '" + c.getName() + "' found!"));
+        cinemaRepository.delete(cinema);
+        return "Cinema deleted!";
     }
 
 
@@ -76,8 +79,7 @@ public class CinemaService {
                 .map(cinema -> modelMapper.map(cinema, CinemaInfoDTO.class))
                 .collect(Collectors.toList());
 
-        for (Cinema c : cinemas
-             ) {
+        for (Cinema c : cinemas) {
             System.out.println(c.getCity().getName());
         }
 

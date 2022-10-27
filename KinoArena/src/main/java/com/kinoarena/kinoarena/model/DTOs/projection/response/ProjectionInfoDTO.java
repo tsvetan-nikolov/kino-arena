@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.model.DTOs.projection;
+package com.kinoarena.kinoarena.model.DTOs.projection.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,12 +11,15 @@ import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
 @Data
 @AllArgsConstructor
+@Setter //todo replace all such with getters/setters???
 public class ProjectionInfoDTO {
     private int id;
     @JsonDeserialize(using = LocalTimeDeserializer.class)

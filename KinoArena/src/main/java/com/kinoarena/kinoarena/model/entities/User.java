@@ -45,6 +45,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "city_id")
     private City city;
 
+
     @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;

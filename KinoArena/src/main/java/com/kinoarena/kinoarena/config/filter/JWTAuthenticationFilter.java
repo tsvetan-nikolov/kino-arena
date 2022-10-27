@@ -1,14 +1,16 @@
 package com.kinoarena.kinoarena.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
+
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
 import com.kinoarena.kinoarena.model.entities.User;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.services.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -49,10 +51,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {
         try {
-            var loginDTO =
+            LoginDTO loginDTO =
                     objectMapper.readValue(req.getInputStream(), LoginDTO.class);
 
-            var user = userDetailsService.loadUserByUsername(loginDTO.getEmail());
+            UserDetails user = userDetailsService.loadUserByUsername(loginDTO.getEmail());
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -68,9 +70,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(
             HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth)
             throws IOException {
-        var userEntity = ((User) auth.getPrincipal());
+        User userEntity = ((User) auth.getPrincipal());
 
-        var token = jwtService.generateToken(userEntity, secretKey);
+        String token = jwtService.generateToken(userEntity, secretKey);
 
         res.setContentType(APPLICATION_JSON_VALUE);
         res.setCharacterEncoding("UTF-8");

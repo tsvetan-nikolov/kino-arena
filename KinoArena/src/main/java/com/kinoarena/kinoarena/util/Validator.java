@@ -47,7 +47,7 @@ public class Validator {
     }
 
     public static boolean validatePhoneNumber(String phoneNumber) {
-        if(!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+        if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public class Validator {
     }
 
     public static boolean dateIsValid(LocalDate dateOfBirth) {
-        if(dateOfBirth.isAfter(LocalDate.now())) {
+        if (dateOfBirth.isAfter(LocalDate.now())) {
             return false;
         }
 

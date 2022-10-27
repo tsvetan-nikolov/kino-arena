@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class MovieController extends AbstractController{
+public class MovieController extends AbstractController {
 
     private final MovieService movieService;
 

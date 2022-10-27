@@ -2,10 +2,8 @@ package com.kinoarena.kinoarena.model.DAOs;
 
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
-import com.kinoarena.kinoarena.model.entities.AgeRestriction;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,8 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.util.*;
 
 @Component
@@ -39,12 +36,11 @@ public class CinemaDAO {
                 "WHERE c.id = %d " +
                 "ORDER BY m.name, p.date, pt.type, p.start_time ASC;", cid);
 
+
         List<ProjectionInfoDTO> projections = projectionDAO.projectionsMapRows(sql);
 
         return projections;
     }
-
-
 
     public List<CinemaInfoDTO> filterCinemasByCity(String cityName) {
         String sql = String.format("SELECT cinemas.id AS cinemaId, cinemas.name AS name, cinemas.address AS address, " +

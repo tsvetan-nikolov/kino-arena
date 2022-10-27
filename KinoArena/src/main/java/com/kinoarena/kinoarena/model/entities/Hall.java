@@ -15,11 +15,9 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) //todo read about cascade
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @Column
     private int number;
-//    @OneToMany(mappedBy = "hall")
-//    private Set<Projection> projections = new HashSet<>();
 }

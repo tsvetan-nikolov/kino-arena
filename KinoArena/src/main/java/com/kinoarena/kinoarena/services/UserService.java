@@ -12,6 +12,14 @@ import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.repositories.*;
+import com.kinoarena.kinoarena.model.entities.City;
+import com.kinoarena.kinoarena.model.entities.Movie;
+import com.kinoarena.kinoarena.model.entities.Role;
+import com.kinoarena.kinoarena.model.entities.User;
+import com.kinoarena.kinoarena.model.repositories.CityRepository;
+import com.kinoarena.kinoarena.model.repositories.MovieRepository;
+import com.kinoarena.kinoarena.model.repositories.RoleRepository;
+import com.kinoarena.kinoarena.model.repositories.UserRepository;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -263,9 +271,9 @@ public class UserService implements UserDetailsService {
     }
 
     private void setUserRoles(User user) {
-        var userRoles = new ArrayList<>(Collections.singleton(ROLE_USER));
+        List<String> userRoles = new ArrayList<>(Collections.singleton(ROLE_USER));
 
-        var userExists = userRepository.count() > 0;
+        boolean userExists = userRepository.count() > 0;
         if (!userExists) {
             userRoles.add(ROLE_ADMIN);
         }

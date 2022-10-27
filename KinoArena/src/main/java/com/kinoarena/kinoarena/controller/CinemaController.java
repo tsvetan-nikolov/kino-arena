@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.services.CinemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CinemaController extends AbstractController{
+public class CinemaController extends AbstractController {
 
     private final CinemaService cinemaService;
 

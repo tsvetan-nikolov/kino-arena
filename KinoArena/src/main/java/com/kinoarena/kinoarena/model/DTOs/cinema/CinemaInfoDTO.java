@@ -1,7 +1,6 @@
 package com.kinoarena.kinoarena.model.DTOs.cinema;
 
 import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
-import com.kinoarena.kinoarena.model.entities.City;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

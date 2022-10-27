@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.util.annotation.UserId;
+
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
@@ -57,7 +58,7 @@ public class UserController extends AbstractController {
 //        }
 //    }
 
-    @GetMapping("/logout") /*TODO you have no power here / unreachable endpoint*/
+    @GetMapping("/logout") /*TODO blacklist stuff*/
     public String logout(HttpSession s, @AuthenticationPrincipal User user) {
         if (s.getAttribute(LOGGED) != null) {
             if ((boolean) s.getAttribute(LOGGED)) {

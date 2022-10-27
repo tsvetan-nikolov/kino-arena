@@ -35,8 +35,10 @@ public class JWTFilterConfigurer extends AbstractHttpConfigurer<JWTFilterConfigu
     @Override
     public void configure(HttpSecurity http) {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-        http.addFilter(new JWTAuthenticationFilter(
-                        objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
+
+        http
+                .addFilter(new JWTAuthenticationFilter
+                        (objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager, secretKey, userDetailsService));
 
     }

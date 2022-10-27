@@ -3,8 +3,6 @@ package com.kinoarena.kinoarena.model.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -21,9 +19,7 @@ public class Cinema {
     private String name;
     @Column
     private String address;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
     private City city;
-    @OneToMany
-    private Set<Hall> halls = new HashSet<>();
 }

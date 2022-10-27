@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.model.DTOs.projection.FilterProjectionsRequestDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.services.ProjectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

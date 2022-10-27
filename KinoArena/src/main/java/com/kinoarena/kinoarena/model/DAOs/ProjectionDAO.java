@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.model.DAOs;
 
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
 import com.kinoarena.kinoarena.model.entities.AgeRestriction;
 import lombok.RequiredArgsConstructor;
