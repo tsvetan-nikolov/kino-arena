@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DAOs.ProjectionDAO;
-import com.kinoarena.kinoarena.model.DTOs.projection.FilterProjectionsRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,6 @@ public class ProjectionService {
         String cinemaName = String.join(" ", cinemaNameSplit);
         return projectionDAO.filterBrandProjections(brand, cinemaName);
     }
-
 
     public ProjectionResponseDTO add(ProjectionRequestDTO p) {
         if (cinemaRepository.findFirstByName(p.getCinemaName()).isEmpty()) {

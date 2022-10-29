@@ -5,12 +5,14 @@ import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.entities.ProjectionType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface ProjectionRepository extends JpaRepository<Projection, Integer> {
 
     Optional<Projection> findFirstByDateAndStartTimeAndHall(LocalDate date, LocalTime time, Hall hall);

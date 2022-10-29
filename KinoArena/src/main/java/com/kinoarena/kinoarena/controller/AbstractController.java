@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
-public abstract class AbstractController /*TODO implement*/ {
+public abstract class AbstractController {
 
     public static final String LOGGED = "LOGGED";
     public static final String USER_ID = "USER_ID";

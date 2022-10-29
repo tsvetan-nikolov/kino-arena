@@ -3,6 +3,7 @@ package com.kinoarena.kinoarena.model.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,4 +21,6 @@ public class Hall {
     private Cinema cinema;
     @Column
     private int number;
+    @OneToMany(mappedBy = "hall")
+    private List<Seat> seats;
 }

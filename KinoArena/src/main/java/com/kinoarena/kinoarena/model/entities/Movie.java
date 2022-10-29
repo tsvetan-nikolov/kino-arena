@@ -39,6 +39,7 @@ public class Movie {
     private AgeRestriction ageRestriction;
     //    @OneToMany(mappedBy = "movie")
 //    private Set<Projection> projections = new HashSet<>();
+
     @ManyToMany(mappedBy = "favouriteMovies", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<User> users = new HashSet<>();

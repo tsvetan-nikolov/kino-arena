@@ -1,8 +1,11 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.model.DTOs.projection.FilterProjectionsRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.seat.SeatForProjectionDTO;
+import com.kinoarena.kinoarena.model.entities.Seat;
 import com.kinoarena.kinoarena.services.ProjectionService;
+import com.kinoarena.kinoarena.services.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +16,10 @@ import java.util.List;
 public class ProjectionController extends AbstractController {
 
     private final ProjectionService projectionService;
-    @GetMapping("/test")
-    public int test() {
-        return 5;
-    } //TODO
+    private final SeatService seatService;
 
     //todo tozi url e pod golqm vurpros :DD
-    @GetMapping("/projections/filter")
+    @GetMapping("/movies/projections/filter")
     public List<ProjectionInfoDTO> filterProjections(@RequestBody FilterProjectionsRequestDTO request){
         return projectionService.filterProjections(request);
     }
@@ -34,4 +34,10 @@ public class ProjectionController extends AbstractController {
 
         return projectionService.filterBrandProjectionsByCinema(brand, cinema);
     }
+
+    @GetMapping("/projections/{pid}/seats")
+    public List<List<SeatForProjectionDTO>> showSeatsForProjection(@PathVariable int pid) {
+        return seatService.showSeatsForProjection(pid);
+    }
+
 }
