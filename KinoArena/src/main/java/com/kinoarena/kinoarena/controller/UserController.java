@@ -1,7 +1,5 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.util.annotation.UserId;
-
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
@@ -11,6 +9,7 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.UserService;
+import com.kinoarena.kinoarena.util.annotation.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +19,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,15 +29,7 @@ public class UserController extends AbstractController {
 
     private final UserService userService;
 
-    //just for testing
-//    @PostMapping(value = "/users")
-//    public UserWithoutPasswordDTO addUser(@RequestBody AddUserDTO u) {
-//        System.out.println(u.getCity());
-//        System.out.println(u.getDateOfBirth());
-//        return userService.addUser(u);
-//    }
-
-    @PostMapping(value = "/register")
+    @PostMapping(value = "register")
     public UserInfoResponse register(@RequestBody @Valid @NotNull RegisterRequestDTO user) {
         return userService.register(user);
     }
@@ -58,16 +52,9 @@ public class UserController extends AbstractController {
 //        }
 //    }
 
-    @GetMapping("/logout") /*TODO blacklist stuff*/
-    public String logout(HttpSession s, @AuthenticationPrincipal User user) {
-        if (s.getAttribute(LOGGED) != null) {
-            if ((boolean) s.getAttribute(LOGGED)) {
-                s.invalidate();
-                return "User logged out successfully!";
-            }
-        }
-
-        return "You are already logged out!";
+    @PostMapping("/logout") /*TODO blacklist stuff*/
+    public String logout(@RequestHeader(AUTHORIZATION) String token) {
+        return userService.logout(token);
     }
 
     @PutMapping(value = "/users/{uid}")
@@ -75,18 +62,18 @@ public class UserController extends AbstractController {
         return userService.changePassword(uid, dto);
     }
 
-    @PutMapping(value = "/users/{uid}/edit")
+    @PutMapping(value = "users/{uid}/edit")
     public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO dto, @PathVariable int uid) {
         return userService.editProfile(dto, uid);
     }
 
-    @PostMapping(value = "/users/add_fav_movie/{movieId}")
+    @PostMapping(value = "/users/add-remove-fav-movie/{movieId}")
     @Transactional
     public MovieResponseDTO addRemoveFavouriteMovie(@PathVariable int movieId, @UserId int userId) {
         return userService.addRemoveFavouriteMovie(movieId, userId);
     }
 
-    @GetMapping(value = "/users/{uid}/favourite-movies")
+    @GetMapping(value = "users/{uid}/favourite-movies")
     public List<FavouriteMovieDTO> showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }

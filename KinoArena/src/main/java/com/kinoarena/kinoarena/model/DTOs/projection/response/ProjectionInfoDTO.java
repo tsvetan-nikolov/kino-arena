@@ -19,7 +19,6 @@ import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
-@Setter //todo replace all such with getters/setters???
 public class ProjectionInfoDTO {
     private int id;
     @JsonDeserialize(using = LocalTimeDeserializer.class)

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
-import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.Hall;
 import lombok.Data;
 

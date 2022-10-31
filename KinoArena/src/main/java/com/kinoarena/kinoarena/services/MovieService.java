@@ -1,13 +1,12 @@
 package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithCinemaDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithHallDTO;
+import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
-import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
 import com.kinoarena.kinoarena.model.repositories.ProjectionRepository;
 import lombok.RequiredArgsConstructor;

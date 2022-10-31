@@ -1,10 +1,10 @@
 package com.kinoarena.kinoarena.controller;
 
+import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
-import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -53,12 +53,11 @@ public abstract class AbstractController /*TODO implement*/ {
         return dto;
     }
 
-    public void logUser(UserWithoutPasswordDTO dto, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute(LOGGED, true);
-        session.setAttribute(USER_ID, dto.getId());
-        session.setAttribute(IS_ADMIN, dto.isAdmin());
-        session.setAttribute(REMOTE_IP, request.getRemoteAddr());
-    }
+//    public void logUser(UserWithoutPasswordDTO dto, HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        session.setAttribute(LOGGED, true);
+//        session.setAttribute(USER_ID, dto.getId());
+//        session.setAttribute(REMOTE_IP, request.getRemoteAddr());
+//    }
 
 }

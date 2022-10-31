@@ -2,6 +2,7 @@ package com.kinoarena.kinoarena.model.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -17,4 +18,8 @@ public class Gender {
     private int id;
     @Column
     private String gender;
+
+    public Gender(String gender) {
+        this.gender = gender;
+    }
 }

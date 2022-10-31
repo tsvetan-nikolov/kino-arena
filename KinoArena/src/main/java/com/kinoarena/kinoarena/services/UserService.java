@@ -1,9 +1,7 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.model.entities.*;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
@@ -11,15 +9,11 @@ import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
+import com.kinoarena.kinoarena.model.entities.*;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.repositories.*;
-import com.kinoarena.kinoarena.model.entities.City;
-import com.kinoarena.kinoarena.model.entities.Movie;
-import com.kinoarena.kinoarena.model.entities.Role;
-import com.kinoarena.kinoarena.model.entities.User;
-import com.kinoarena.kinoarena.model.repositories.CityRepository;
-import com.kinoarena.kinoarena.model.repositories.MovieRepository;
-import com.kinoarena.kinoarena.model.repositories.RoleRepository;
-import com.kinoarena.kinoarena.model.repositories.UserRepository;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -52,33 +46,32 @@ public class UserService implements UserDetailsService {
     private final RoleRepository roleRepository;
     private final GenderRepository genderRepository;
 
+    private final JwtService jwtService;
+
     public UserInfoResponse register(RegisterRequestDTO user) {
         validateRegisterInformation(user);
 
-        User createUserToRegister = createUserToRegister(user);
-        return modelMapper.map(createUserToRegister, UserInfoResponse.class);
+        User userToRegister = createUserToRegister(user);
+        userRepository.save(userToRegister);
+        return modelMapper.map(userToRegister, UserInfoResponse.class);
     }
 
-    private User createUserToRegister(RegisterRequestDTO user) {
-        User newUser = modelMapper.map(user, User.class);
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+    private User createUserToRegister(RegisterRequestDTO u) {
+        User user = modelMapper.map(u, User.class);
+        user.setPassword(passwordEncoder.encode(u.getPassword()));
 
-        String cityName = user.getCityName();
-        City city = cityRepository.findFirstByName(cityName).orElse(cityRepository.save(new City(cityName)));
-        newUser.setCity(city);
+        String cityName = u.getCityName();
+        City city = cityRepository.findFirstByName(cityName)
+                .orElse(cityRepository.save(new City(cityName)));
+        user.setCity(city);
 
-        String userGender = user.getGender();
-        Optional<Gender> gender = genderRepository.findFirstByGender(userGender);
+        String userGender = u.getGender();
+        Gender gender = genderRepository.findFirstByGender(userGender)
+                .orElse(genderRepository.save(new Gender(userGender)));
+        user.setGender(gender);
 
-        if(gender.isPresent()) {
-            Gender g = gender.get();
-            newUser.setGender(g);
-        }
-
-        setUserRoles(newUser);
-
-        userRepository.save(newUser);
-        return newUser;
+        setUserRoles(user);
+        return user;
     }
 
     private void validateRegisterInformation(RegisterRequestDTO user) {
@@ -279,5 +272,10 @@ public class UserService implements UserDetailsService {
         }
 
         user.getRoles().addAll(roleRepository.findAllByNameIn(userRoles));
+    }
+
+    public String logout(String token) {
+        jwtService.invalidateToken(token);
+        return "You have logged out successfully!";
     }
 }

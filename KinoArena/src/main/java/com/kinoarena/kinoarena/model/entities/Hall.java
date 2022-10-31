@@ -15,7 +15,7 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(cascade = CascadeType.ALL) //todo read about cascade
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @Column

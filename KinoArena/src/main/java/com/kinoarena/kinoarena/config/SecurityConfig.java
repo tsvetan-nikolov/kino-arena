@@ -57,16 +57,16 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        var source = new UrlBasedCorsConfigurationSource();
-        var corsConfig = new CorsConfiguration().applyPermitDefaultValues();
-        corsConfig.addAllowedMethod("*");
-
-        source.registerCorsConfiguration("/**", corsConfig);
-
-        return source;
-    }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        var source = new UrlBasedCorsConfigurationSource();
+//        var corsConfig = new CorsConfiguration().applyPermitDefaultValues();
+//        corsConfig.addAllowedMethod("*");
+//
+//        source.registerCorsConfiguration("/**", corsConfig);
+//
+//        return source;
+//    }
 
     @Bean
     public Function<User, Integer> extractUserId() {

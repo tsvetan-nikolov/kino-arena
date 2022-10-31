@@ -1,12 +1,11 @@
 package com.kinoarena.kinoarena.model.DTOs.movie;
 
-import java.time.LocalDate;
-
 import com.kinoarena.kinoarena.model.entities.AgeRestriction;
 import com.kinoarena.kinoarena.model.entities.Genre;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Setter

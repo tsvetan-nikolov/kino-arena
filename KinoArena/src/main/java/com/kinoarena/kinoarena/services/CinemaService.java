@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,7 +31,7 @@ public class CinemaService {
 
     public Cinema add(CinemaRequestDTO c) {
         if (cinemaRepository.findFirstByAddress(c.getAddress()).isPresent()
-                || cinemaRepository.findFirstByName(c.getName()).isPresent()) {//todo should i check by the name too?
+                || cinemaRepository.findFirstByName(c.getName()).isPresent()) {
             throw new BadRequestException("Cinema already exists");
         }
 

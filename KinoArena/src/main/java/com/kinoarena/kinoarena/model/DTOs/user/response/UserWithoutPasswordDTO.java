@@ -2,6 +2,7 @@ package com.kinoarena.kinoarena.model.DTOs.user.response;
 
 import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
 import com.kinoarena.kinoarena.model.entities.City;
+import com.kinoarena.kinoarena.model.entities.Gender;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,6 +19,6 @@ public class UserWithoutPasswordDTO {
     private LocalDate dateOfBirth;
     private String address;
     private City city;
-    private boolean isAdmin;
+    private Gender gender;
     private List<FavouriteMovieDTO> favouriteMovies;
 }

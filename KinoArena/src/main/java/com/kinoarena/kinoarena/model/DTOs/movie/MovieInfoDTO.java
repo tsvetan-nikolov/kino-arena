@@ -11,9 +11,7 @@ import com.kinoarena.kinoarena.model.entities.AgeRestriction;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 @Data
 public class MovieInfoDTO {
