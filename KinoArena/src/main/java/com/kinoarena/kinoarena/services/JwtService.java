@@ -70,5 +70,4 @@ public class JwtService { /*TODO cronjob to delete expired tokens*/
     }
 
 
-
 }

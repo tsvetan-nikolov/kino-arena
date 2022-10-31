@@ -19,13 +19,12 @@ public class CinemaDAO {
     private final JdbcTemplate jdbcTemplate;
     private final ProjectionDAO projectionDAO;
 
-//todo refactoring and make jdbcTemplate work
     public List<ProjectionInfoDTO> getProgram(int cid) {
 
         String sql = String.format("SELECT p.id AS projectionId, p.start_time AS startTime, p.date AS date, " +
                 "pt.id AS projectionTypeId, pt.type AS projectionType, m.id AS movieId, " +
                 "m.name AS movieName, m.premiere AS premiere, m.is_dubbed AS isDubbed, " +
-                "ar.id AS ageRestrictionId, ar.category AS ageRestriction " +
+                "ar.id AS ageRestrictionId, ar.category AS ageRestriction, ar.age AS age " +
                 "FROM projections AS p JOIN halls AS h ON (h.id = p.hall_id) " +
                 "JOIN cinemas AS c ON (c.id = h.cinema_id) " +
                 "JOIN movies AS m ON (m.id = p.movie_id) " +

@@ -7,19 +7,15 @@ import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
-import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.UserService;
 import com.kinoarena.kinoarena.util.annotation.UserId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 

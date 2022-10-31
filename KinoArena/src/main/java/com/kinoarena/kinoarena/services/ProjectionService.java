@@ -2,7 +2,7 @@ package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DAOs.ProjectionDAO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieWithoutUsersDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.FilterProjectionsRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
@@ -34,18 +34,19 @@ public class ProjectionService {
     private final MovieRepository movieRepository;
     private final ProjectionTypeRepository projectionTypeRepository;
     private final CinemaRepository cinemaRepository;
+
     public List<ProjectionInfoDTO> filterProjections(FilterProjectionsRequestDTO request) {
         String cinema = request.getCinema();
         String movie = request.getMovie();
         LocalDate date = request.getDate();
 
-        if(cinema == null) {
+        if (cinema == null) {
             throw new BadRequestException("Trying to filter without cinema!");
         }
-        if(movie == null) {
+        if (movie == null) {
             throw new BadRequestException("Trying to filter without movie title!");
         }
-        if(date == null) {
+        if (date == null) {
             throw new BadRequestException("Trying to filter without projection date!");
         }
 
@@ -61,7 +62,6 @@ public class ProjectionService {
         String cinemaName = String.join(" ", cinemaNameSplit);
         return projectionDAO.filterBrandProjections(brand, cinemaName);
     }
-
 
     public ProjectionResponseDTO add(ProjectionRequestDTO p) {
         if (cinemaRepository.findFirstByName(p.getCinemaName()).isEmpty()) {

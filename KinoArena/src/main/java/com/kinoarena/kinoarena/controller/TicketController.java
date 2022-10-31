@@ -4,7 +4,6 @@ import com.kinoarena.kinoarena.model.DTOs.tickets.TicketRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.tickets.TicketResponseDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.services.TicketService;
-import com.kinoarena.kinoarena.util.annotation.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class TicketController extends AbstractController {
     @PostMapping("/booking/{projectionId}")
     public List<TicketResponseDTO> reserveTicket(
             @RequestParam TicketRequestDTO req, @AuthenticationPrincipal User user, @PathVariable int projectionId) {
-        return ticketService.reserve(req,user,projectionId);
+        return ticketService.reserve(req, user, projectionId);
     }
 
 }

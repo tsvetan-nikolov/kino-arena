@@ -11,7 +11,6 @@ import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

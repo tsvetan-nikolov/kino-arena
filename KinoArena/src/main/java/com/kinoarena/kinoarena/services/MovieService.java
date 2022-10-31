@@ -35,7 +35,7 @@ public class MovieService {
 
             MovieInfoDTO dto = modelMapper.map(m, MovieInfoDTO.class);
 
-            List<ProjectionWithHallDTO> withHall =  getProjections(dto);
+            List<ProjectionWithHallDTO> withHall = getProjections(dto);
             dto.setProjections(withHall.stream().map(p -> modelMapper.map(p, ProjectionWithCinemaDTO.class)).collect(Collectors.toList()));
 
             sortProjections(dto);
@@ -50,8 +50,8 @@ public class MovieService {
         Collections.sort(dto.getProjections(), new Comparator<ProjectionWithCinemaDTO>() {
             @Override
             public int compare(ProjectionWithCinemaDTO o1, ProjectionWithCinemaDTO o2) {
-                if(o2.getCinema().getName().compareTo(o1.getCinema().getName()) == 0) {
-                    if(o2.getDate().compareTo(o1.getDate()) == 0) {
+                if (o2.getCinema().getName().compareTo(o1.getCinema().getName()) == 0) {
+                    if (o2.getDate().compareTo(o1.getDate()) == 0) {
                         if (o2.getProjectionType().getType().compareTo(o1.getProjectionType().getType()) == 0) {
                             if (o2.getStartTime().compareTo(o1.getStartTime()) == 0) {
                                 return 0;
@@ -84,7 +84,7 @@ public class MovieService {
 
         List<Projection> projections = projectionRepository.findAllByMovieId(movieId);
 
-        List<ProjectionWithHallDTO> withHall = projections.stream().map(p -> modelMapper.map(p,ProjectionWithHallDTO.class)).collect(Collectors.toList());
+        List<ProjectionWithHallDTO> withHall = projections.stream().map(p -> modelMapper.map(p, ProjectionWithHallDTO.class)).collect(Collectors.toList());
         withHall.stream().forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoDTO.class)));
         return withHall;
     }

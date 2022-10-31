@@ -1,7 +1,6 @@
 package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.model.DTOs.error.ErrorDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
@@ -9,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
-public abstract class AbstractController /*TODO implement*/ {
+public abstract class AbstractController {
 
     public static final String LOGGED = "LOGGED";
     public static final String USER_ID = "USER_ID";

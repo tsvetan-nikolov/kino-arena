@@ -1,4 +1,4 @@
-package com.kinoarena.kinoarena.model.DTOs.projection;
+package com.kinoarena.kinoarena.model.DTOs.projection.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 @Data
 public class FilterProjectionsRequestDTO {
-    //filtrirane po id ili po name ???
     private String cinema;
     private String movie;
     @JsonDeserialize(using = LocalDateDeserializer.class)
