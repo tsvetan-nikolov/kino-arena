@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-132.5" y="134.0">com.kinoarena.kinoarena.util.annotation</node>
+    <node x="177.5" y="48.5">com.kinoarena.kinoarena.util.Validator</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Compact" zoom="1.0" showDependencies="false" x="363.5" y="99.5" />
+  <SelectedNodes>
+    <node>com.kinoarena.kinoarena.util.Validator</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

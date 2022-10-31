@@ -2,9 +2,9 @@ package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DAOs.CinemaDAO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaDeleteRequestDTO;
-import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaRequestDTO;
-import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.city.CityInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.City;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -72,17 +70,17 @@ public class CinemaService {
     }
 
 
-    public List<CinemaInfoDTO> getAllCinemas() {
+    public List<CinemaInfoResponseDTO> getAllCinemas() {
         List<Cinema> cinemas = cinemaRepository.findAll();
 
-        List<CinemaInfoDTO> dto = cinemas.stream()
-                .map(cinema -> modelMapper.map(cinema, CinemaInfoDTO.class))
+        List<CinemaInfoResponseDTO> dto = cinemas.stream()
+                .map(cinema -> modelMapper.map(cinema, CinemaInfoResponseDTO.class))
                 .collect(Collectors.toList());
 
         IntStream.range(0, cinemas.size())
                 .forEach(index -> dto
                         .get(index)
-                        .setCity(modelMapper.map(cinemas.get(index).getCity(), CityInfoDTO.class)));
+                        .setCity(modelMapper.map(cinemas.get(index).getCity(), CityInfoResponseDTO.class)));
         return dto;
     }
 
@@ -90,7 +88,7 @@ public class CinemaService {
         return cinemaDAO.getProgram(cid);
     }
 
-    public List<CinemaInfoDTO> filterCinemasByCity(String cityName) {
+    public List<CinemaInfoResponseDTO> filterCinemasByCity(String cityName) {
         return cinemaDAO.filterCinemasByCity(cityName);
     }
 }

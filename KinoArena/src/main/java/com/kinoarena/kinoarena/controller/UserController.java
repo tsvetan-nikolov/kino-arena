@@ -2,10 +2,10 @@ package com.kinoarena.kinoarena.controller;
 
 import com.kinoarena.kinoarena.util.annotation.UserId;
 
-import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
@@ -71,12 +71,12 @@ public class UserController extends AbstractController {
     }
 
     @PutMapping(value = "/users/{uid}")
-    public UserWithoutPasswordDTO changePassword(@RequestBody ChangePasswordDTO dto, @PathVariable int uid) {
+    public UserWithoutPasswordDTO changePassword(@RequestBody ChangePasswordRequestDTO dto, @PathVariable int uid) {
         return userService.changePassword(uid, dto);
     }
 
     @PutMapping(value = "/users/{uid}/edit")
-    public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO dto, @PathVariable int uid) {
+    public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileRequestDTO dto, @PathVariable int uid) {
         return userService.editProfile(dto, uid);
     }
 
@@ -87,7 +87,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "/users/{uid}/favourite-movies")
-    public List<FavouriteMovieDTO> showFavoriteMovies(@PathVariable int uid) {
+    public List<MovieSummarizedResponseDTO> showFavoriteMovies(@PathVariable int uid) {
         return userService.showFavouriteMovies(uid);
     }
 

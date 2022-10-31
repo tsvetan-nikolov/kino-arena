@@ -1,27 +1,25 @@
 package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DAOs.ProjectionDAO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieWithoutUsersDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionResponseDTO;
 import com.kinoarena.kinoarena.model.entities.Hall;
 import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.entities.ProjectionType;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.repositories.*;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -107,7 +105,7 @@ public class ProjectionService {
                 .startTime(start)
                 .date(projectionDate)
                 .projectionType(projectionType)
-                .movie(modelMapper.map(movie, MovieWithoutUsersDTO.class))
+                .movie(modelMapper.map(movie, MovieInfoDTO.class))
                 .hall(hall)
                 .basePrice(p.getBasePrice())
                 .build();

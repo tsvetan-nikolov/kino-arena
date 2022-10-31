@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithCinemaDTO;
+import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithoutHallDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithHallDTO;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
@@ -37,7 +37,7 @@ public class MovieService {
             MovieInfoDTO dto = modelMapper.map(m, MovieInfoDTO.class);
 
             List<ProjectionWithHallDTO> withHall =  getProjections(dto);
-            dto.setProjections(withHall.stream().map(p -> modelMapper.map(p, ProjectionWithCinemaDTO.class)).collect(Collectors.toList()));
+            dto.setProjections(withHall.stream().map(p -> modelMapper.map(p, ProjectionWithoutHallDTO.class)).collect(Collectors.toList()));
 
             sortProjections(dto);
 
@@ -48,9 +48,9 @@ public class MovieService {
     }
 
     private void sortProjections(MovieInfoDTO dto) {
-        Collections.sort(dto.getProjections(), new Comparator<ProjectionWithCinemaDTO>() {
+        Collections.sort(dto.getProjections(), new Comparator<ProjectionWithoutHallDTO>() {
             @Override
-            public int compare(ProjectionWithCinemaDTO o1, ProjectionWithCinemaDTO o2) {
+            public int compare(ProjectionWithoutHallDTO o1, ProjectionWithoutHallDTO o2) {
                 if(o2.getCinema().getName().compareTo(o1.getCinema().getName()) == 0) {
                     if(o2.getDate().compareTo(o1.getDate()) == 0) {
                         if (o2.getProjectionType().getType().compareTo(o1.getProjectionType().getType()) == 0) {
@@ -86,7 +86,7 @@ public class MovieService {
         List<Projection> projections = projectionRepository.findAllByMovieId(movieId);
 
         List<ProjectionWithHallDTO> withHall = projections.stream().map(p -> modelMapper.map(p,ProjectionWithHallDTO.class)).collect(Collectors.toList());
-        withHall.stream().forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoDTO.class)));
+        withHall.stream().forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoResponseDTO.class)));
         return withHall;
     }
 }

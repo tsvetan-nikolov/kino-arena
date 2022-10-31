@@ -4,10 +4,10 @@ import com.kinoarena.kinoarena.model.entities.*;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
-import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
@@ -112,7 +112,7 @@ public class UserService implements UserDetailsService {
 //        }
 //    }
 
-    public UserWithoutPasswordDTO changePassword(int uid, ChangePasswordDTO dto) {
+    public UserWithoutPasswordDTO changePassword(int uid, ChangePasswordRequestDTO dto) {
         String oldPassword = dto.getOldPassword();
         String newPassword = dto.getNewPassword();
         String confirmPassword = dto.getConfirmPassword();
@@ -144,7 +144,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public UserWithoutPasswordDTO editProfile(EditProfileDTO dto, int uid) {
+    public UserWithoutPasswordDTO editProfile(EditProfileRequestDTO dto, int uid) {
         Optional<User> user = userRepository.findById(uid);
         if (user.isPresent()) {
             User u = user.get();
@@ -158,7 +158,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void setNewValues(EditProfileDTO dto, User u) {
+    private void setNewValues(EditProfileRequestDTO dto, User u) {
         if (!dto.getFirstName().equals(u.getFirstName())) {
             u.setFirstName(dto.getFirstName());
         }
@@ -245,12 +245,12 @@ public class UserService implements UserDetailsService {
 //    }
 
 
-    public List<FavouriteMovieDTO> showFavouriteMovies(int uid) {
+    public List<MovieSummarizedResponseDTO> showFavouriteMovies(int uid) {
         User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
         UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
         dto.setFavouriteMovies(user.getFavouriteMovies()
                 .stream()
-                .map(m -> modelMapper.map(m, FavouriteMovieDTO.class))
+                .map(m -> modelMapper.map(m, MovieSummarizedResponseDTO.class))
                 .collect(Collectors.toList()));
         return dto.getFavouriteMovies();
     }

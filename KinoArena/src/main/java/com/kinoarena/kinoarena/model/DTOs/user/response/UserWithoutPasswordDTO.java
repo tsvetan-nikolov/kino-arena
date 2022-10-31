@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.model.DTOs.user.response;
 
-import com.kinoarena.kinoarena.model.DTOs.movie.FavouriteMovieDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.entities.City;
 import lombok.Data;
 
@@ -19,5 +19,5 @@ public class UserWithoutPasswordDTO {
     private String address;
     private City city;
     private boolean isAdmin;
-    private List<FavouriteMovieDTO> favouriteMovies;
+    private List<MovieSummarizedResponseDTO> favouriteMovies;
 }

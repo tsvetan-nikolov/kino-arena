@@ -3,7 +3,6 @@ package com.kinoarena.kinoarena.controller;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.seat.SeatForProjectionDTO;
-import com.kinoarena.kinoarena.model.entities.Seat;
 import com.kinoarena.kinoarena.services.ProjectionService;
 import com.kinoarena.kinoarena.services.SeatService;
 import lombok.RequiredArgsConstructor;

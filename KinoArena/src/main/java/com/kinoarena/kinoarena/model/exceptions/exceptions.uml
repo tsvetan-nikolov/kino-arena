@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-85.0" y="5.0">com.kinoarena.kinoarena.model.exceptions.BadRequestException</node>
+    <node x="120.0" y="5.0">com.kinoarena.kinoarena.model.exceptions.NotFoundException</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Compact" zoom="1.0" showDependencies="false" x="363.5" y="99.5" />
+  <SelectedNodes>
+    <node>com.kinoarena.kinoarena.model.exceptions.NotFoundException</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

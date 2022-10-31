@@ -2,7 +2,7 @@ package com.kinoarena.kinoarena.model.DAOs;
 
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeResponseDTO;
 import com.kinoarena.kinoarena.model.entities.AgeRestriction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -82,7 +82,7 @@ public class ProjectionDAO {
 
         int projectionTypeId = rs.getInt("projectionTypeId");
         String projectionType = rs.getString("projectionType");
-        ProjectionTypeInfoDTO pt = new ProjectionTypeInfoDTO(projectionTypeId, projectionType);
+        ProjectionTypeResponseDTO pt = new ProjectionTypeResponseDTO(projectionTypeId, projectionType);
 
         int projectionId = rs.getInt("projectionId");
         LocalTime projectionTime = rs.getTime("startTime").toLocalTime();
@@ -102,7 +102,7 @@ public class ProjectionDAO {
                 rs.getString("ageRestriction"), rs.getInt("age"));
         boolean isDubbed = rs.getBoolean("isDubbed");
 
-        return new MovieProgramDTO(movieId, movieName, premiere, ageRestr, isDubbed);
+        return new MovieProgramDTO(movieId, movieName, ageRestr, isDubbed, premiere);
     }
 
 }
