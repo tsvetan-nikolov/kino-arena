@@ -27,7 +27,7 @@ public class AuthConstants {
 
         public static final String PASSWORD_DIGITS = ".*[0-9].*";
 
-        public static final String PHONE_NUMBER_PATTERN = "/^08[7-9][0-9]{7}$/";
+        public static final String PHONE_NUMBER_PATTERN = "^08[7-9][0-9]{7}$";
     }
 
     private AuthConstants() {

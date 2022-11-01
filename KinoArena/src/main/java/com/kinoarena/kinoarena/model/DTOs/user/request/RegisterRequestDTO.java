@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Setter
 public class RegisterRequestDTO {
 
-    //    TODO: check if @NotNull should be used or not
     @NotEmpty
     private String firstName;
 
@@ -36,6 +35,7 @@ public class RegisterRequestDTO {
     @NotEmpty
     private String confirmPassword;
 
+    @NotEmpty
     private String cityName;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)

@@ -68,6 +68,7 @@ public class ProjectionDAO {
 
         return projectionsMapRows(sql);
     }
+
     public List<ProjectionInfoDTO> projectionsMapRows(String sql) {
         List<ProjectionInfoDTO> projections = jdbcTemplate.query(sql, new RowMapper<ProjectionInfoDTO>() {
             @Override

@@ -31,7 +31,7 @@ public class CinemaService {
 
     public Cinema add(CinemaRequestDTO c) {
         if (cinemaRepository.findFirstByAddress(c.getAddress()).isPresent()
-                || cinemaRepository.findFirstByName(c.getName()).isPresent()) {//todo should i check by the name too?
+                || cinemaRepository.findFirstByName(c.getName()).isPresent()) {
             throw new BadRequestException("Cinema already exists");
         }
 

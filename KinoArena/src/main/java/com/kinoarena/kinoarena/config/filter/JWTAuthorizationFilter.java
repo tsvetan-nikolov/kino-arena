@@ -1,7 +1,6 @@
 package com.kinoarena.kinoarena.config.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import com.kinoarena.kinoarena.services.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +23,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final JwtService jwtService;
+
     public JWTAuthorizationFilter(
             AuthenticationManager authenticationManager,
             String secretKey,
-            UserDetailsService userDetailsService) {
+            UserDetailsService userDetailsService,
+            JwtService jwtService) {
         super(authenticationManager);
         this.secretKey = secretKey;
         this.userDetailsService = userDetailsService;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -53,22 +56,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_AUTHORIZATION);
         if (token != null) {
-            String email =
-                    JWT.require(Algorithm.HMAC512(secretKey.getBytes()))
-                            .build()
-                            .verify(token.replace(TOKEN_PREFIX, ""))
-                            .getSubject();
-
-            //TODO Extract into jwtService
+            String email = jwtService.validateToken(token, secretKey);
 
             if (email != null) {
                 UserDetails entity = userDetailsService.loadUserByUsername(email);
                 return new UsernamePasswordAuthenticationToken(entity, null, entity.getAuthorities());
             }
-
-            return null;
         }
-
         return null;
     }
 }

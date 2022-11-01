@@ -17,4 +17,8 @@ public class Gender {
     private int id;
     @Column
     private String gender;
+
+    public Gender(String gender) {
+        this.gender = gender;
+    }
 }

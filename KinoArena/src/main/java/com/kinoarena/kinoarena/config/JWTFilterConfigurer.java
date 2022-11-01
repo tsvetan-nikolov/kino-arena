@@ -37,9 +37,9 @@ public class JWTFilterConfigurer extends AbstractHttpConfigurer<JWTFilterConfigu
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
 
         http
-                .addFilter(new JWTAuthenticationFilter
-                        (objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager, secretKey, userDetailsService));
-
+                .addFilter(new JWTAuthenticationFilter(
+                        objectMapper, authenticationManager, secretKey, userDetailsService, jwtService))
+                .addFilter(new JWTAuthorizationFilter(
+                        authenticationManager, secretKey, userDetailsService, jwtService));
     }
 }

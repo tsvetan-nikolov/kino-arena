@@ -11,14 +11,12 @@ import com.kinoarena.kinoarena.model.DTOs.movie.MovieProgramDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection_type.ProjectionTypeResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
-@Setter //todo replace all such with getters/setters???
 public class ProjectionInfoDTO {
     private int id;
 

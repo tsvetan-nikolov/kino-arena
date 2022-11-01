@@ -45,7 +45,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "city_id")
     private City city;
 
-
     @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;
@@ -99,6 +98,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    //todo add gender table to db and user class
 
 }

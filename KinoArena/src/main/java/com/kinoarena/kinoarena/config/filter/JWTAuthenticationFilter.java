@@ -18,8 +18,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
+import static com.kinoarena.kinoarena.util.constant.AuthConstants.JWT.TOKEN_PREFIX;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -76,6 +77,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         res.setContentType(APPLICATION_JSON_VALUE);
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(objectMapper.writeValueAsString(Map.of("access_token", token)));
+        res.addHeader(AUTHORIZATION, TOKEN_PREFIX + token);
+        res.getWriter().write("Log in was successful!");
+//        res.getWriter().write(objectMapper.writeValueAsString(Map.of("access_token", token)));
     }
 }

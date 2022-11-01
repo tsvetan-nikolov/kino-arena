@@ -19,7 +19,7 @@ public class Cinema {
     private String name;
     @Column
     private String address;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 }

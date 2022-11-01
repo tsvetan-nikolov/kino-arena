@@ -1,13 +1,13 @@
 package com.kinoarena.kinoarena.services;
 
+
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithoutHallDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.ProjectionWithHallDTO;
+import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.entities.Projection;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
-import com.kinoarena.kinoarena.model.entities.Movie;
 import com.kinoarena.kinoarena.model.repositories.MovieRepository;
 import com.kinoarena.kinoarena.model.repositories.ProjectionRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +50,7 @@ public class MovieService {
     private void sortProjections(MovieInfoDTO dto) {
         Collections.sort(dto.getProjections(), new Comparator<ProjectionWithoutHallDTO>() {
             @Override
+
             public int compare(ProjectionWithoutHallDTO o1, ProjectionWithoutHallDTO o2) {
                 if(o2.getCinema().getName().compareTo(o1.getCinema().getName()) == 0) {
                     if(o2.getDate().compareTo(o1.getDate()) == 0) {
@@ -87,6 +88,7 @@ public class MovieService {
 
         List<ProjectionWithHallDTO> withHall = projections.stream().map(p -> modelMapper.map(p,ProjectionWithHallDTO.class)).collect(Collectors.toList());
         withHall.stream().forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoResponseDTO.class)));
+
         return withHall;
     }
 }

@@ -3,7 +3,6 @@ package com.kinoarena.kinoarena.model.DAOs;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.city.CityInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.util.*;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +18,7 @@ public class CinemaDAO {
 
     private final JdbcTemplate jdbcTemplate;
     private final ProjectionDAO projectionDAO;
+
     public List<ProjectionInfoDTO> getProgram(int cid) {
 
         String sql = String.format("SELECT p.id AS projectionId, p.start_time AS startTime, p.date AS date, " +

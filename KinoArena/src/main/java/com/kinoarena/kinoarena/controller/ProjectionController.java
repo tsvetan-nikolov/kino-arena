@@ -6,7 +6,10 @@ import com.kinoarena.kinoarena.model.DTOs.seat.SeatForProjectionDTO;
 import com.kinoarena.kinoarena.services.ProjectionService;
 import com.kinoarena.kinoarena.services.SeatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class ProjectionController extends AbstractController {
 
     //todo tozi url e pod golqm vurpros :DD
     @GetMapping("/movies/projections/filter")
-    public List<ProjectionInfoDTO> filterProjections(@RequestBody FilterProjectionsRequestDTO request){
+    public List<ProjectionInfoDTO> filterProjections(@RequestBody FilterProjectionsRequestDTO request) {
         return projectionService.filterProjections(request);
     }
 
