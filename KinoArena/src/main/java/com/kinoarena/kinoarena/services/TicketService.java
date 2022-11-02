@@ -5,7 +5,6 @@ import com.kinoarena.kinoarena.model.DTOs.seat.SeatWithoutHallDTO;
 import com.kinoarena.kinoarena.model.DTOs.tickets.ReserveTicketResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.tickets.TicketRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.tickets.TicketResponseDTO;
-import com.kinoarena.kinoarena.model.DTOs.user.response.UserReserveTicketDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.*;
 import com.kinoarena.kinoarena.model.exceptions.NotFoundException;

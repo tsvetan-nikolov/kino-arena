@@ -62,8 +62,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (AuthenticationException e) {
-            int c = 5;
-
             throw new UnauthorizedException(e.getMessage());
         }
     }

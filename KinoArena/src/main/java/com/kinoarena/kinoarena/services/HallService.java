@@ -2,6 +2,7 @@ package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DTOs.hall.HallEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.hall.HallWithoutSeatsDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.Hall;
 import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
@@ -21,7 +22,7 @@ public class HallService {
     private final HallRepository hallRepository;
     private final CinemaRepository cinemaRepository;
 
-    public Hall add(HallRequestDTO h) {
+    public HallWithoutSeatsDTO add(HallRequestDTO h) {
         Cinema cinema = cinemaRepository.findFirstByName(h.getCinemaName())
                 .orElseThrow(() -> new NotFoundException("Cinema doesn't exist!"));
 
@@ -37,11 +38,11 @@ public class HallService {
         }
 
         hallRepository.save(hall);
-        return hall;
+        return modelMapper.map(hall, HallWithoutSeatsDTO.class);
     }
 
     @Transactional
-    public Hall edit(HallEditRequestDTO h) {
+    public HallWithoutSeatsDTO edit(HallEditRequestDTO h) {
         Cinema cinema = cinemaRepository.findFirstByName(h.getCinemaName())
                 .orElseThrow(() -> new NotFoundException("Cinema doesn't exist!"));
         Hall hall = hallRepository.findFirstByCinemaNameAndNumber(h.getCinemaName(), h.getOldNumber())
@@ -50,8 +51,7 @@ public class HallService {
         hall.setNumber(h.getNewNumber());
         hall.setCinema(cinema);
 
-        //todo zashto prosto ne vrushtame hall ? nqma  smisul ot model mapper sqkash
-        return modelMapper.map(hall, Hall.class);
+        return modelMapper.map(hall, HallWithoutSeatsDTO.class);
     }
 
     public String delete(HallRequestDTO h) {

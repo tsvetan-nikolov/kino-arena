@@ -4,6 +4,7 @@ import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaDeleteRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallRequestDTO;
+import com.kinoarena.kinoarena.model.DTOs.hall.HallWithoutSeatsDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionEditRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionResponseDTO;
@@ -46,12 +47,12 @@ public class AdminController extends AbstractController {
     }
 
     @PostMapping("/halls")
-    public Hall addHall(@RequestBody HallRequestDTO hall) {
+    public HallWithoutSeatsDTO addHall(@RequestBody HallRequestDTO hall) {
         return hallService.add(hall);
     }
 
     @PutMapping("/halls")
-    public Hall editHall(@RequestBody HallEditRequestDTO hall) {
+    public HallWithoutSeatsDTO editHall(@RequestBody HallEditRequestDTO hall) {
         return hallService.edit(hall);
     }
 

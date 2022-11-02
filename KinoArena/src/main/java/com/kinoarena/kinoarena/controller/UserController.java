@@ -25,7 +25,7 @@ public class UserController extends AbstractController {
 
     private final UserService userService;
 
-    @PostMapping(value = "register")
+    @PostMapping(value = "/register")
     public UserInfoResponse register(@RequestBody @Valid @NotNull RegisterRequestDTO user) {
         return userService.register(user);
     }
