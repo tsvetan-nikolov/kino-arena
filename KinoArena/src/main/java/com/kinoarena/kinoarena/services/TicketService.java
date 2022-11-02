@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,7 @@ public class TicketService {
                 projectionRepository.findById(projectionId), ProjectionResponseDTO.class);
 
         List<TicketResponseDTO> ticketsToReserve = new ArrayList<>();
+
         reserveTickets(req, userWithoutPasswordDTO, projectionResponseDTO, ticketsToReserve);
         double totalPrice = ticketsToReserve
                 .stream()
@@ -52,6 +54,8 @@ public class TicketService {
     }
 
     private void reserveTickets(TicketRequestDTO req, UserWithoutPasswordDTO userWithoutPasswordDTO, ProjectionResponseDTO projectionResponseDTO, List<TicketResponseDTO> ticketsToReserve) {
+        //TODO check if ticket exists
+
         for (int i = 0; i < req.getTicketTypes().size(); i++) {
             Seat seat = seatRepository.findById(req.getSeatIds().get(i))
                     .orElseThrow(() -> new NotFoundException("Seat not found!"));
@@ -74,6 +78,7 @@ public class TicketService {
             ticketsToReserve.add(ticketToReserve);
 
         }
+
     }
 
     private Ticket createTicket(UserWithoutPasswordDTO userWithoutPasswordDTO,

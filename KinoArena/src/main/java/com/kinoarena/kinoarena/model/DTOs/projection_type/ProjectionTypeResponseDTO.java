@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class ProjectionTypeInfoDTO {
+public class ProjectionTypeResponseDTO {
     private int id;
     private String type;
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-217.5" y="-7.5">com.kinoarena.kinoarena.model.DTOs.tickets</node>
+    <node x="192.5" y="133.5">com.kinoarena.kinoarena.model.DTOs.cinema</node>
+    <node x="-217.5" y="54.0">com.kinoarena.kinoarena.model.DTOs.movie</node>
+    <node x="204.0" y="54.0">com.kinoarena.kinoarena.model.DTOs.city</node>
+    <node x="183.0" y="287.0">com.kinoarena.kinoarena.model.DTOs.projection</node>
+    <node x="199.5" y="210.0">com.kinoarena.kinoarena.model.DTOs.error</node>
+    <node x="166.0" y="-77.0">com.kinoarena.kinoarena.model.DTOs.projection_type</node>
+    <node x="-210.5" y="210.0">com.kinoarena.kinoarena.model.DTOs.seat</node>
+    <node x="204.0" y="-7.5">com.kinoarena.kinoarena.model.DTOs.genre</node>
+    <node x="-208.5" y="133.5">com.kinoarena.kinoarena.model.DTOs.hall</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Compact" zoom="1.0" showDependencies="false" x="363.5" y="99.5" />
+  <SelectedNodes>
+    <node>com.kinoarena.kinoarena.model.DTOs.tickets</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

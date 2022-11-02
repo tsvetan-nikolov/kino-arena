@@ -1,7 +1,7 @@
 package com.kinoarena.kinoarena.model.DAOs;
 
-import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
-import com.kinoarena.kinoarena.model.DTOs.city.CityInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
+import com.kinoarena.kinoarena.model.DTOs.city.CityInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,16 +39,16 @@ public class CinemaDAO {
         return projections;
     }
 
-    public List<CinemaInfoDTO> filterCinemasByCity(String cityName) {
+    public List<CinemaInfoResponseDTO> filterCinemasByCity(String cityName) {
         String sql = String.format("SELECT cinemas.id AS cinemaId, cinemas.name AS name, cinemas.address AS address, " +
                 "cities.id AS cityId, cities.name AS city " +
                 "FROM cinemas " +
                 "JOIN cities ON (cinemas.city_id=cities.id) " +
                 "WHERE cities.name = \"%s\";", cityName);
 
-        List<CinemaInfoDTO> cinemas = jdbcTemplate.query(sql, new RowMapper<CinemaInfoDTO>() {
+        List<CinemaInfoResponseDTO> cinemas = jdbcTemplate.query(sql, new RowMapper<CinemaInfoResponseDTO>() {
             @Override
-            public CinemaInfoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public CinemaInfoResponseDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return setCinemaValues(rs);
             }
         });
@@ -56,12 +56,12 @@ public class CinemaDAO {
         return cinemas;
     }
 
-    private CinemaInfoDTO setCinemaValues(ResultSet rs) throws SQLException {
+    private CinemaInfoResponseDTO setCinemaValues(ResultSet rs) throws SQLException {
         int cinemaID = rs.getInt("cinemaId");
         String cinemaName = rs.getString("name");
         String address = rs.getString("address");
-        CityInfoDTO city = new CityInfoDTO(rs.getInt("cityId"), rs.getString("city"));
+        CityInfoResponseDTO city = new CityInfoResponseDTO(rs.getInt("cityId"), rs.getString("city"));
 
-        return new CinemaInfoDTO(cinemaID, cinemaName, address, city);
+        return new CinemaInfoResponseDTO(cinemaID, cinemaName, address, city);
     }
 }

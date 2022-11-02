@@ -27,7 +27,9 @@ public class SeatService {
     public List<List<SeatForProjectionDTO>> showSeatsForProjection(int pid) {
         Projection p = projectionRepository.findById(pid).orElseThrow(() -> new NotFoundException("No projection found"));
         List<Seat> seats = p.getHall().getSeats();
-        List<SeatForProjectionDTO> dto = seats.stream().map(seat -> modelMapper.map(seat, SeatForProjectionDTO.class)).collect(Collectors.toList());
+        List<SeatForProjectionDTO> dto = seats.stream()
+                .map(seat -> modelMapper.map(seat, SeatForProjectionDTO.class))
+                .collect(Collectors.toList());
 
         List<List<SeatForProjectionDTO>> seatsForProjection = new ArrayList<>();
 
@@ -37,7 +39,6 @@ public class SeatService {
             }
 
             Optional<Ticket> t = ticketRepository.findFirstBySeat(modelMapper.map(seat, Seat.class));
-
             if (t.isPresent()) {
                 seat.setFree(false);
             }

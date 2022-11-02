@@ -1,7 +1,8 @@
 package com.kinoarena.kinoarena.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kinoarena.kinoarena.model.DTOs.user.request.LoginDTO;
+
+import com.kinoarena.kinoarena.model.DTOs.user.request.LoginRequestDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.services.JwtService;
@@ -51,8 +52,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {
         try {
-            LoginDTO loginDTO =
-                    objectMapper.readValue(req.getInputStream(), LoginDTO.class);
+            LoginRequestDTO loginDTO =
+                    objectMapper.readValue(req.getInputStream(), LoginRequestDTO.class);
 
             UserDetails user = userDetailsService.loadUserByUsername(loginDTO.getEmail());
 

@@ -1,6 +1,6 @@
 package com.kinoarena.kinoarena.controller;
 
-import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoDTO;
+import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.services.CinemaService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class CinemaController extends AbstractController {
     private final CinemaService cinemaService;
 
     @GetMapping(value = "/cinemas")
-    public List<CinemaInfoDTO> getAllCinemas() {
+    public List<CinemaInfoResponseDTO> getAllCinemas() {
         return cinemaService.getAllCinemas();
     }
 
@@ -27,7 +27,7 @@ public class CinemaController extends AbstractController {
     }
 
     @GetMapping(value = "/cinemas/{cityName}")
-    public List<CinemaInfoDTO> filterCinemasByCity(@PathVariable String cityName) {
+    public List<CinemaInfoResponseDTO> filterCinemasByCity(@PathVariable String cityName) {
         return cinemaService.filterCinemasByCity(cityName);
     }
 }

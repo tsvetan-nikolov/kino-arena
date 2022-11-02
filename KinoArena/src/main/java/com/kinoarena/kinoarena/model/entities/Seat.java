@@ -23,4 +23,5 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "hall_id")
     private Hall hall;
+
 }
