@@ -1,14 +1,14 @@
 package com.kinoarena.kinoarena.controller;
-import com.kinoarena.kinoarena.util.annotation.UserId;
 
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.services.UserService;
+import com.kinoarena.kinoarena.util.annotation.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

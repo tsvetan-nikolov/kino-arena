@@ -4,7 +4,6 @@ import com.kinoarena.kinoarena.model.DAOs.CinemaDAO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaDeleteRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.cinema.CinemaRequestDTO;
-import com.kinoarena.kinoarena.model.DTOs.city.CityInfoResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Cinema;
 import com.kinoarena.kinoarena.model.entities.City;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor

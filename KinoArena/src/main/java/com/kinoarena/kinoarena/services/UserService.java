@@ -1,16 +1,16 @@
 package com.kinoarena.kinoarena.services;
 
-import com.kinoarena.kinoarena.model.entities.*;
-import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
-import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
-import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
-import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieResponseDTO;
+import com.kinoarena.kinoarena.model.DTOs.movie.MovieSummarizedResponseDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.ChangePasswordRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.EditProfileRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.request.RegisterRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
+import com.kinoarena.kinoarena.model.entities.*;
+import com.kinoarena.kinoarena.model.exceptions.BadRequestException;
+import com.kinoarena.kinoarena.model.exceptions.NotFoundException;
+import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
 import com.kinoarena.kinoarena.model.repositories.*;
 import com.kinoarena.kinoarena.util.Validator;
 import lombok.RequiredArgsConstructor;

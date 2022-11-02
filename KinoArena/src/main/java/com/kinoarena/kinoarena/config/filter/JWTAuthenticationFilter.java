@@ -1,7 +1,6 @@
 package com.kinoarena.kinoarena.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.kinoarena.kinoarena.model.DTOs.user.request.LoginRequestDTO;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.model.exceptions.UnauthorizedException;
@@ -63,6 +62,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (AuthenticationException e) {
+            int c = 5;
+
             throw new UnauthorizedException(e.getMessage());
         }
     }

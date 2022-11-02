@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.kinoarena.kinoarena.model.DTOs.hall.HallWithoutSeatsDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
-import com.kinoarena.kinoarena.model.entities.Hall;
 import com.kinoarena.kinoarena.model.entities.ProjectionType;
 import lombok.*;
 
