@@ -20,7 +20,6 @@ public class Seat {
     private int number;
     @Column
     private int row;
-
     @ManyToOne
     @JoinColumn(name = "hall_id")
     private Hall hall;

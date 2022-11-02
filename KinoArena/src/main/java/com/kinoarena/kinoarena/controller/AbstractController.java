@@ -12,11 +12,6 @@ import java.time.LocalDateTime;
 
 public abstract class AbstractController {
 
-    public static final String LOGGED = "LOGGED";
-    public static final String USER_ID = "USER_ID";
-    public static final String IS_ADMIN = "IS_ADMIN";
-    public static final String REMOTE_IP = "REMOTE_IP";
-
     @ExceptionHandler(value = BadRequestException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorDTO handleBadRequest(Exception e) {

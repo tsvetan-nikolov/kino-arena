@@ -21,6 +21,6 @@ public class Hall {
     private Cinema cinema;
     @Column
     private int number;
-    @OneToMany(mappedBy = "hall")
+    @OneToMany
     private List<Seat> seats;
 }

@@ -7,6 +7,7 @@ import com.kinoarena.kinoarena.model.entities.InvalidToken;
 import com.kinoarena.kinoarena.model.entities.User;
 import com.kinoarena.kinoarena.model.repositories.InvalidTokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,11 @@ public class JwtService { /*TODO cronjob to delete expired tokens*/
                 .build();
 
         invalidTokenRepository.save(invalidToken);
+    }
+
+    @Scheduled(cron = "0 0 3 * * *")
+    public void deleteExpiredInvalidTokens() {
+        invalidTokenRepository.deleteAllByExpirationBefore(LocalDateTime.now());
     }
 
     private LocalDateTime convertToLocalDateTime(Date dateToConvert) {

@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.model.DTOs.tickets;
 
 import com.kinoarena.kinoarena.model.DTOs.projection.response.ProjectionResponseDTO;
+import com.kinoarena.kinoarena.model.DTOs.seat.SeatWithoutHallDTO;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.model.entities.Seat;
 import com.kinoarena.kinoarena.model.entities.TicketType;
@@ -14,7 +15,6 @@ import lombok.Setter;
 public class TicketResponseDTO {
     private int id;
     private TicketType ticketType;
-    private ProjectionResponseDTO projection;
-    private UserWithoutPasswordDTO user;
-    private Seat seat;
+    private SeatWithoutHallDTO seat;
+    private double totalPrice;
 }

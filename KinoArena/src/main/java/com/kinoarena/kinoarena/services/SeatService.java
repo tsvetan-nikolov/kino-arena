@@ -31,8 +31,7 @@ public class SeatService {
 
         List<List<SeatForProjectionDTO>> seatsForProjection = new ArrayList<>();
 
-        for (SeatForProjectionDTO seat : dto
-        ) {
+        for (SeatForProjectionDTO seat : dto) {
             if (seatsForProjection.size() < seat.getRow()) {
                 seatsForProjection.add(new ArrayList<>());
             }
