@@ -77,10 +77,6 @@ public class CinemaService {
                 .map(cinema -> modelMapper.map(cinema, CinemaInfoResponseDTO.class))
                 .collect(Collectors.toList());
 
-        IntStream.range(0, cinemas.size())
-                .forEach(index -> dto
-                        .get(index)
-                        .setCity(modelMapper.map(cinemas.get(index).getCity(), CityInfoResponseDTO.class)));
         return dto;
     }
 

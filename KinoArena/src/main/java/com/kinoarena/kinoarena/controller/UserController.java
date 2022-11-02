@@ -10,13 +10,11 @@ import com.kinoarena.kinoarena.model.DTOs.user.response.UserInfoResponse;
 import com.kinoarena.kinoarena.model.DTOs.user.response.UserWithoutPasswordDTO;
 import com.kinoarena.kinoarena.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.net.http.HttpClient;
 import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -50,7 +48,7 @@ public class UserController extends AbstractController {
 //        }
 //    }
 
-    @PostMapping("/logout") /*TODO blacklist stuff*/
+    @PostMapping("/logout")
     public String logout(@RequestHeader(AUTHORIZATION) String token) {
         return userService.logout(token);
     }

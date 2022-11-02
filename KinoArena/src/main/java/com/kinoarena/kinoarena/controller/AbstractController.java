@@ -42,7 +42,7 @@ public abstract class AbstractController {
     }
 
     private ErrorDTO buildErrorInfo(Exception e, HttpStatus status) {
-        e.printStackTrace(); //add to log file??
+        e.printStackTrace();
         ErrorDTO dto = new ErrorDTO();
         dto.setStatus(status.value());
         dto.setMsg(e.getMessage());

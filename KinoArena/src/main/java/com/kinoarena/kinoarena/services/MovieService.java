@@ -37,7 +37,8 @@ public class MovieService {
             MovieInfoDTO dto = modelMapper.map(m, MovieInfoDTO.class);
 
             List<ProjectionWithHallDTO> withHall =  getProjections(dto);
-            dto.setProjections(withHall.stream().map(p -> modelMapper.map(p, ProjectionWithoutHallDTO.class)).collect(Collectors.toList()));
+            dto.setProjections(withHall.stream()
+                    .map(p -> modelMapper.map(p, ProjectionWithoutHallDTO.class)).collect(Collectors.toList()));
 
             sortProjections(dto);
 
@@ -86,8 +87,11 @@ public class MovieService {
 
         List<Projection> projections = projectionRepository.findAllByMovieId(movieId);
 
-        List<ProjectionWithHallDTO> withHall = projections.stream().map(p -> modelMapper.map(p,ProjectionWithHallDTO.class)).collect(Collectors.toList());
-        withHall.stream().forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoResponseDTO.class)));
+        List<ProjectionWithHallDTO> withHall = projections.stream()
+                .map(p -> modelMapper.map(p,ProjectionWithHallDTO.class)).collect(Collectors.toList());
+
+        withHall.stream()
+                .forEach(p -> p.setCinema(modelMapper.map(p.getHall().getCinema(), CinemaInfoResponseDTO.class)));
 
         return withHall;
     }

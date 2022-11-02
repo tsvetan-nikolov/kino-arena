@@ -1,6 +1,7 @@
 package com.kinoarena.kinoarena.services;
 
 import com.kinoarena.kinoarena.model.DAOs.ProjectionDAO;
+import com.kinoarena.kinoarena.model.DTOs.hall.HallWithoutSeatsDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.FilterProjectionsRequestDTO;
 import com.kinoarena.kinoarena.model.DTOs.projection.request.ProjectionEditRequestDTO;
@@ -107,7 +108,7 @@ public class ProjectionService {
                 .date(projectionDate)
                 .projectionType(projectionType)
                 .movie(modelMapper.map(movie, MovieInfoDTO.class))
-                .hall(hall)
+                .hall(modelMapper.map(hall, HallWithoutSeatsDTO.class))
                 .basePrice(p.getBasePrice())
                 .build();
     }

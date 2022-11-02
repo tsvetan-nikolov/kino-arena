@@ -76,6 +76,7 @@ public class ProjectionDAO {
                 return setProjectionValues(rs);
             }
         });
+
         return projections;
     }
 
@@ -99,9 +100,9 @@ public class ProjectionDAO {
         int movieId = rs.getInt("movieId");
         String movieName = rs.getString("movieName");
         LocalDate premiere = rs.getDate("premiere").toLocalDate();
+        boolean isDubbed = rs.getBoolean("isDubbed");
         AgeRestriction ageRestr = new AgeRestriction(rs.getInt("ageRestrictionId"),
                 rs.getString("ageRestriction"), rs.getInt("age"));
-        boolean isDubbed = rs.getBoolean("isDubbed");
 
         return new MovieProgramDTO(movieId, movieName, ageRestr, isDubbed, premiere);
     }

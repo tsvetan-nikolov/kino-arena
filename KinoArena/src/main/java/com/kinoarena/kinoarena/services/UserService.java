@@ -137,10 +137,11 @@ public class UserService implements UserDetailsService {
 
     public UserWithoutPasswordDTO editProfile(EditProfileRequestDTO dto, int uid) {
         Optional<User> user = userRepository.findById(uid);
+
         if (user.isPresent()) {
             User u = user.get();
 
-            setNewValues(dto, u);
+            setNewUserValues(dto, u);
             userRepository.save(u);
 
             return modelMapper.map(u, UserWithoutPasswordDTO.class);
@@ -149,7 +150,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void setNewValues(EditProfileRequestDTO dto, User u) {
+    private void setNewUserValues(EditProfileRequestDTO dto, User u) {
         if (!dto.getFirstName().equals(u.getFirstName())) {
             u.setFirstName(dto.getFirstName());
         }
@@ -210,6 +211,7 @@ public class UserService implements UserDetailsService {
 
         boolean movieAlreadyInFavourites = u.getFavouriteMovies().stream().anyMatch(m -> m.getId() == movieId);
         MovieResponseDTO movieResponse = new MovieResponseDTO();
+
         if (movieAlreadyInFavourites) {
             u.getFavouriteMovies().remove(movie);
             movie.getUsers().remove(u);
@@ -238,6 +240,7 @@ public class UserService implements UserDetailsService {
 
     public List<MovieSummarizedResponseDTO> showFavouriteMovies(int uid) {
         User user = userRepository.findById(uid).orElseThrow(() -> new NotFoundException("User not found"));
+
         UserWithoutPasswordDTO dto = modelMapper.map(user, UserWithoutPasswordDTO.class);
         dto.setFavouriteMovies(user.getFavouriteMovies()
                 .stream()

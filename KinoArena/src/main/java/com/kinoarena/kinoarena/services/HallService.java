@@ -50,6 +50,7 @@ public class HallService {
         hall.setNumber(h.getNewNumber());
         hall.setCinema(cinema);
 
+        //todo zashto prosto ne vrushtame hall ? nqma  smisul ot model mapper sqkash
         return modelMapper.map(hall, Hall.class);
     }
 

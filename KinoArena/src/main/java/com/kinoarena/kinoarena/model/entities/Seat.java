@@ -21,8 +21,8 @@ public class Seat {
     @Column
     private int row;
 
-//    @ManyToOne
-//    @JoinColumn(name = "hall_id")
-//    private Hall hall;
+    @ManyToOne
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
     //TODO
 }

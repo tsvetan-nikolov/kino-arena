@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.kinoarena.kinoarena.model.DTOs.hall.HallWithoutSeatsDTO;
 import com.kinoarena.kinoarena.model.DTOs.movie.MovieInfoDTO;
 import com.kinoarena.kinoarena.model.entities.Hall;
 import com.kinoarena.kinoarena.model.entities.ProjectionType;
@@ -35,6 +36,6 @@ public class ProjectionResponseDTO { /*TODO unify responses?*/
 
     private ProjectionType projectionType;
     private MovieInfoDTO movie;
-    private Hall hall;
+    private HallWithoutSeatsDTO hall;
     private double basePrice; //todo check prices if all are double
 }

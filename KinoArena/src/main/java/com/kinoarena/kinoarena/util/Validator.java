@@ -10,7 +10,6 @@ import static com.kinoarena.kinoarena.util.constant.AuthConstants.UserAuthentica
 public class Validator {
 
     public static boolean validatePassword(String password) {
-        //TODO with spring security and constants
         if (password.equals("")) {
             throw new UnauthorizedException("Please enter new password");
         } else if (password.length() < 8) {

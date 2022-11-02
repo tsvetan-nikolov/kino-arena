@@ -33,7 +33,6 @@ public class ProjectionController extends AbstractController {
 
     @GetMapping("/brands/{brand}/movies/{cinema}")
     public List<ProjectionInfoDTO> filterBrandProjections(@PathVariable String brand, @PathVariable String cinema) {
-
         return projectionService.filterBrandProjectionsByCinema(brand, cinema);
     }
 
